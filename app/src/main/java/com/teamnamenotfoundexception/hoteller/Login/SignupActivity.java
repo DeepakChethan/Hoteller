@@ -14,7 +14,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.teamnamenotfoundexception.hoteller.Activities.MainActivity;
 import com.teamnamenotfoundexception.hoteller.R;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener{

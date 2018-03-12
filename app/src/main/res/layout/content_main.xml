@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.teamnamenotfoundexception.hoteller.Activities.MainActivity">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.teamnamenotfoundexception.hoteller.Activities.MainActivity"
+    tools:showIn="@layout/app_bar_main">
 
-    <android.support.v7.widget.Toolbar
+    <!-- TODO Here goes the recycler view-->
+
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tools"
-        android:background="@color/colorPrimaryDark"
-        ></android.support.v7.widget.Toolbar>
+        android:id="@+id/recycle"></android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>
