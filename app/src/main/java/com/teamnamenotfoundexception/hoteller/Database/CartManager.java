@@ -23,15 +23,15 @@ public class CartManager  {
 
     private FirebaseUser mUser = null;
 
-    private FirebaseDatabase mFirebaseDatabase = null;
+    private static FirebaseDatabase mFirebaseDatabase = null;
 
-    private FirebaseHelper mFirebaseHelper = null;
+    private static FirebaseHelper mFirebaseHelper = null;
 
     private ArrayList<DishItem> mCartItems;
 
     private Context mAppContext;
 
-    private CartManager mCartManager = null;
+    private static  CartManager mCartManager = null;
 
     private int mTotalOrderPrice = 0;
 
@@ -56,7 +56,7 @@ public class CartManager  {
     }
 
 
-    public CartManager get(Context c) {
+    public static CartManager get(Context c) {
 
         if(mCartManager == null) {
             mCartManager = new CartManager(c);

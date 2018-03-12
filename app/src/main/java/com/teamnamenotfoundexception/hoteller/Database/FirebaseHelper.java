@@ -24,7 +24,8 @@ public class FirebaseHelper {
 
     public void setFirebaseDatabase(FirebaseDatabase firebaseDatabase) {
         mFirebaseDatabase = firebaseDatabase;
-        mDatabaseReference = mFirebaseDatabase.getReference("CustomerData/orders/" );
+        if(firebaseDatabase != null)
+            mDatabaseReference = mFirebaseDatabase.getReference("CustomerData/orders/" );
     }
 
 

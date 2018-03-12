@@ -34,27 +34,31 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.loginBtn:
-                email_text = email.getText().toString();
-                pass_text = pass.getText().toString();
-                if (!email_text.isEmpty() && !pass_text.isEmpty()){
-                    Toast.makeText(getApplicationContext(),"All fields are mandatory!",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                auth.createUserWithEmailAndPassword(email_text,pass_text).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        startActivity(new Intent(SignupActivity.this, MainActivity.class));
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(SignupActivity.this,"Some error occured with Signup",Toast.LENGTH_SHORT).show();
-                    }
-                });
-                break;
-            
-        }
+
     }
+    public void onSignUpButtonClicked(View v) {
+
+        email_text = email.getText().toString();
+        pass_text = pass.getText().toString();
+        if (email_text.isEmpty() && pass_text.isEmpty()){
+            Toast.makeText(getApplicationContext(),"All fields are mandatory!",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        auth.createUserWithEmailAndPassword(email_text,pass_text).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                Toast.makeText(getApplicationContext(), "Successfully signed up, login to continue", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                finish();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(SignupActivity.this,"Some error occured with Signup",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
 }
+
