@@ -17,6 +17,8 @@ public class DishRepository  {
 
     private DishRepository mDishRepository = null;
 
+    private DatabaseHelper mDatabaseHelper = null;
+
     private Context mAppContext;
 
     private SharedPreferences mSharedPref;
@@ -24,7 +26,7 @@ public class DishRepository  {
 
     private DishRepository(Context context) {
         mAppContext = context;
-        mDatabasehelper = new DatabaseHelper();
+        mDatabasehelper = new DatabaseHelper(mAppContext);
         mSharedPref = mAppContext.getSharedPreferences("user_data", Context.MODE_PRIVATE);
     }
 
@@ -37,16 +39,17 @@ public class DishRepository  {
     }
 
     public ArrayList<DishItem> getAllDishes() {
-        DatabaseHelper.QuestionCursor mQuestionCursor = mDatabaseHelper.queryQuestions();
-        ArrayList<DishItem> questionsList = new ArrayList<>();
+        DatabaseHelper.DishItemCursor mQuestionCursor = mDatabaseHelper.getAllDishItems();
+        ArrayList<DishItem> dishItemsList = new ArrayList<>();
         if(mQuestionCursor.getCount() > 0) {
             for(int i = 0; i < mQuestionCursor.getCount(); i++) {
-                DishItem dishItem = mQuestionCursor.getQuestion();
-                questionsList.add(question);
+                DishItem dishItem = mQuestionCursor.getDishItem();
+                dishItemsList.add(dishItem);
+                mQuestionCursor.moveToNext();
             }
         }
         mQuestionCursor.close();
-        return questionsList;
+        return dishItemsList;
     }
 
 }
