@@ -38,13 +38,15 @@
             android:hint="@string/password"
             android:layout_marginTop="@dimen/dopeDimen"
             />
+
         <Button
+            android:id="@+id/loginButton"
+            style="@style/btnStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/loginBtn"
-            android:text="Sign up"
             android:layout_marginTop="@dimen/dopeDimen"
-            style="@style/btnStyle"/>
+            android:onClick="onSignUpButtonClicked"
+            android:text="Sign up" />
 
     </LinearLayout>
 

@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.teamnamenotfoundexception.hoteller.Activities.MainActivity;
 import com.teamnamenotfoundexception.hoteller.R;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener{
@@ -33,30 +34,31 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.loginBtn:
-                email_text = email.getText().toString();
-                pass_text = pass.getText().toString();
-                if (!email_text.isEmpty() && !pass_text.isEmpty()){
-                    Toast.makeText(getApplicationContext(),"All fields are mandatory!",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                auth.createUserWithEmailAndPassword(email_text,pass_text).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        startActivity(new Intent(SignupActivity.this, MainActivity.class));
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(SignupActivity.this,"Some error occured with Signup",Toast.LENGTH_SHORT).show();
-                    }
-                });
-                break;
 
-            case R.id.singnupBtn:
-                startActivity(new Intent(SignupActivity.this,SignupActivity.class));
-                break;
-        }
     }
+    public void onSignUpButtonClicked(View v) {
+
+        email_text = email.getText().toString();
+        pass_text = pass.getText().toString();
+        if (email_text.isEmpty() && pass_text.isEmpty()){
+            Toast.makeText(getApplicationContext(),"All fields are mandatory!",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        auth.createUserWithEmailAndPassword(email_text,pass_text).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                Toast.makeText(getApplicationContext(), "Successfully signed up, login to continue", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                finish();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(SignupActivity.this,"Some error occured with Signup",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
 }
+

@@ -37,21 +37,24 @@
             android:hint="@string/password"
             android:layout_marginTop="@dimen/dopeDimen"
             />
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/loginBtn"
-            android:text="@string/login"
-            android:layout_marginTop="@dimen/dopeDimen"
-            style="@style/btnStyle"/>
 
         <Button
+            android:id="@+id/loginBtn"
+            style="@style/btnStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/singnupBtn"
-            android:text="Sign Up"
             android:layout_marginTop="@dimen/dopeDimen"
-            style="@style/btnStyle"/>
+            android:onClick="onLoginButtonClicked"
+            android:text="@string/login" />
+
+        <Button
+            android:id="@+id/signUpButton"
+            style="@style/btnStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dopeDimen"
+            android:onClick="onSignUpButtonClicked"
+            android:text="Sign Up" />
 
     </LinearLayout>
 
