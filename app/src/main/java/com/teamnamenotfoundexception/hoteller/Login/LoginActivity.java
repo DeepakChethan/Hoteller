@@ -1,6 +1,7 @@
 package com.teamnamenotfoundexception.hoteller.Login;
 
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,6 +41,42 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public void onLoginButtonClicked(View v) {
         Toast.makeText(this, "we will do this", Toast.LENGTH_SHORT).show();
+
+        email = groupId.getText().toString();
+        password = groupPass.getText().toString();
+        progressBar.setVisibility(View.VISIBLE);
+        if ( email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(getApplicationContext(),"Fill this thing up!",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(!isNetworkAvailableAndConnected()) {
+            Toast.makeText(getApplicationContext(),"top up first", Toast.LENGTH_SHORT).show();
+            return ;
+        }
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Check your creds!",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            StatusManager.get(getApplicationContext()).setAuth(FirebaseAuth.getInstance());
+                            StatusManager.get(getApplicationContext()).setUser(FirebaseAuth.getInstance().getCurrentUser());
+                            StatusManager.get(getApplicationContext()).setFirebaseDatabase(FirebaseDatabase.getInstance());
+                            startActivity(new Intent(getApplicationContext(), BufferActivity.class));
+                            Log.i("i", "logging in");
+                            finish();
+                        }
+                    }
+                });
+    }
+
+    private boolean isNetworkAvailableAndConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        boolean isNetworkAvailable = cm.getActiveNetworkInfo() != null;
+        boolean isNetworkConnected = isNetworkAvailable && cm.getActiveNetworkInfo().isConnected();
+        return isNetworkConnected;
     }
 
     public void onSignUpButtonClicked(View v) {
