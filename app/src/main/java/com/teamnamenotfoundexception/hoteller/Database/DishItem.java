@@ -6,6 +6,7 @@ package com.teamnamenotfoundexception.hoteller.Database;
 
 public class DishItem {
 
+    public int mDishId;
     public String mDishName;
     public String mDishType;
     public int mPrice;
@@ -19,14 +20,25 @@ public class DishItem {
 
     }
 
-    public DishItem(String dishName, String dishType, int cost, int quantity, String description, String imagePath) {
+
+
+    public DishItem(int dishId, String dishName, String dishType, int price, int quantity, String description, String imagePath) {
+        this.mDishId = dishId;
         this.mDishName = dishName;
         this.mDishType = dishType;
-        this.mPrice = cost;
+        this.mPrice = price;
         this.mQuantity = quantity;
         this.mDescription = description;
         this.mImagePath = imagePath ;
+    }
 
+
+    public int getDishId() {
+        return mDishId;
+    }
+
+    public void setDishId(int dishId) {
+        mDishId = dishId;
     }
 
     public void setQuantity (int quantity) {
@@ -76,7 +88,7 @@ public class DishItem {
         this.mDishType = mDishType;
     }
 
-    public void setCost(int price) {
+    public void setPrice(int price) {
         this.mPrice = price;
     }
 
