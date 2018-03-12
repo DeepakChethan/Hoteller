@@ -32,7 +32,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberPassword"
+            android:inputType="textPassword"
             android:id="@+id/pass"
             android:hint="@string/password"
             android:layout_marginTop="@dimen/dopeDimen"

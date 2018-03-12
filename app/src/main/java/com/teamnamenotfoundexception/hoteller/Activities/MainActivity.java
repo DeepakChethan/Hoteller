@@ -1,6 +1,8 @@
 package com.teamnamenotfoundexception.hoteller.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,30 +18,45 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.teamnamenotfoundexception.hoteller.DCAdapter;
 import com.teamnamenotfoundexception.hoteller.Database.DishItem;
+import com.teamnamenotfoundexception.hoteller.Login.LoginActivity;
 import com.teamnamenotfoundexception.hoteller.R;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private RecyclerView recyclerView;
     private LinearLayoutManager llm;
-    private List<DishItem> dishItems;
+    private ArrayList<DishItem> dishItems;
+    private FirebaseAuth auth;
+    private FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        dishItems.add(new DishItem("Dosa","Nice",20,1,"This is nice","Gothilla"));
-        dishItems.add(new DishItem("Dosa","Nice",20,1,"This is nice","Gothilla"));
-        dishItems.add(new DishItem("Dosa","Nice",20,1,"This is nice","Gothilla"));
-        dishItems.add(new DishItem("Dosa","Nice",20,1,"This is nice","Gothilla"));
+        auth= FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+        if (user == null){
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        }
+        dishItems = new ArrayList<>();
+        dishItems.add(new DishItem(1,"Dosa","Nice",20,1,"This is nice","Gothilla"));
+        dishItems.add(new DishItem(2,"Dosa","Nice",20,1,"This is nice","Gothilla"));
+        dishItems.add(new DishItem(3,"Dosa","Nice",20,1,"This is nice","Gothilla"));
+        dishItems.add(new DishItem(4,"Dosa","Nice",20,1,"This is nice","Gothilla"));
 
         // The recycler view
         recyclerView = (RecyclerView) findViewById(R.id.recycle);
