@@ -26,21 +26,21 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/email"
+            android:id="@+id/semail"
             android:inputType="textEmailAddress"
             android:hint="@string/email"
             />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberPassword"
-            android:id="@+id/pass"
+            android:inputType="textPassword"
+            android:id="@+id/spass"
             android:hint="@string/password"
             android:layout_marginTop="@dimen/dopeDimen"
             />
 
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/ssignupBtn"
             style="@style/btnStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
     <ProgressBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/progress"
+        android:id="@+id/sprogress"
         android:layout_alignParentBottom="true"
         android:visibility="gone"/>
 

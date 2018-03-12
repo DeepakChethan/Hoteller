@@ -39,7 +39,7 @@
             />
 
         <Button
-            android:id="@+id/loginBtn"
+            android:id="@+id/lloginBtn"
             style="@style/btnStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
             android:text="@string/login" />
 
         <Button
-            android:id="@+id/signUpButton"
+            android:id="@+id/lsignUpButton"
             style="@style/btnStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
