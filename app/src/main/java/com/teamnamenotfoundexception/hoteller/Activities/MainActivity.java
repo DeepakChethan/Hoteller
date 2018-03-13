@@ -55,10 +55,10 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
         }
         dishItems = new ArrayList<>();
-        dishItems.add(new DishItem(1,"Dosa","Nice",20,1,"This is nice","Gothilla"));
-        dishItems.add(new DishItem(2,"Dosa","Nice",20,1,"This is nice","Gothilla"));
-        dishItems.add(new DishItem(3,"Dosa","Nice",20,1,"This is nice","Gothilla"));
-        dishItems.add(new DishItem(4,"Dosa","Nice",20,1,"This is nice","Gothilla"));
+        dishItems.add(new DishItem(1,"Dosa","Nice",20,1,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
+        dishItems.add(new DishItem(2,"Dosa","Nice",20,1,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
+        dishItems.add(new DishItem(3,"Dosa","Nice",20,1,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
+        dishItems.add(new DishItem(4,"Dosa","Nice",20,1,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
 
         // The recycler view
         recyclerView = (RecyclerView) findViewById(R.id.recycle);
@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         DCAdapter adapter = new DCAdapter(getApplicationContext(),dishItems);
         recyclerView.setAdapter(adapter);
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);

@@ -6,6 +6,76 @@
     android:layout_height="match_parent"
     tools:context="com.teamnamenotfoundexception.hoteller.Activities.BillActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:id="@+id/billTools"
+        app:title="Bill"
+        app:titleTextColor="@color/white"
+        ></android.support.v7.widget.Toolbar>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/finalBill"
+        android:padding="@dimen/dopeDimen"
+        android:paddingBottom="@dimen/dopeDimen"
+        >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/billamttext"
+                style="@style/textStyle"
+                android:text="Bill Amount"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/billAmt"
+                style="@style/textStyle"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:text="2000"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_below="@id/billamttext"
+            android:layout_height="wrap_content"
+            style="@style/textStyle"
+            android:id="@+id/billtaxtext"
+            android:text="Bill Tax"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/billtax"
+            style="@style/textStyle"
+            android:layout_below="@id/billAmt"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="2000"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_below="@id/billtaxtext"
+            android:layout_height="wrap_content"
+            style="@style/textStyle"
+            android:text="Bill Tax"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/billtotal"
+            style="@style/textStyle"
+            android:layout_below="@id/billtax"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="2000"/>
+
+    </RelativeLayout>
+<ListView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/billTools"
+    android:layout_above="@+id/finalBill"
+    android:id="@+id/bill-dishes"></ListView>
+
 
 
 </RelativeLayout>
