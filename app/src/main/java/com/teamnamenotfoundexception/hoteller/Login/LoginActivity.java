@@ -29,6 +29,7 @@ public class LoginActivity extends AppCompatActivity{
     private String email_text,pass_text;
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +42,7 @@ public class LoginActivity extends AppCompatActivity{
 
 
     public void onLoginButtonClicked(View v) {
-        Toast.makeText(this, "we will do this", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "trying to log you in ", Toast.LENGTH_SHORT).show();
         email_text = email.getText().toString();
         pass_text= pass.getText().toString();
         progressBar.setVisibility(View.VISIBLE);
@@ -64,6 +65,7 @@ public class LoginActivity extends AppCompatActivity{
                             Toast.makeText(getApplicationContext(), "Check your creds!",
                                     Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.INVISIBLE);
+
                         } else {
                             CartManager.get(getApplicationContext()).setAuth(FirebaseAuth.getInstance());
                             CartManager.get(getApplicationContext()).setUser(FirebaseAuth.getInstance().getCurrentUser());

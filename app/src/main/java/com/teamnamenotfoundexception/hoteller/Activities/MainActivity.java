@@ -39,8 +39,11 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView recyclerView;
     private LinearLayoutManager llm;
     private ArrayList<DishItem> dishItems;
-    private FirebaseAuth auth;
-    private FirebaseUser user;
+    private CartManager mCartManager;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,11 +53,19 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        auth= FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
-        if (user == null){
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        mCartManager = CartManager.get(getApplicationContext());
+        mAuth = mCartManager.getAuth();
+        if (mAuth == null) {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        } else {
+            mUser = mAuth.getCurrentUser();
+            Log.i("i", "staying here only");
+            Log.i("i", mUser.getEmail());
         }
+
         dishItems = new ArrayList<>();
         dishItems.add(new DishItem(1,"Dosa","Tiffin",20,1,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
         dishItems.add(new DishItem(2,"Dosa","Dinner",20,1,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
@@ -76,6 +87,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -132,7 +144,7 @@ public class MainActivity extends AppCompatActivity
             }
 
             CartManager.get(getApplication()).setAuth(null);
-          //  Log.i("before logout", CartManager.get(getApplicationContext()).getUser().getEmail());
+           Log.i("before logout", CartManager.get(getApplicationContext()).getUser().getEmail());
             CartManager.get(getApplicationContext()).setUser(null);
             CartManager.get(getApplicationContext()).setFirebaseDatabase(null);
 
