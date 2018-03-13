@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -16,36 +17,38 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.teamnamenotfoundexception.hoteller.Activities.MainActivity;
+import com.teamnamenotfoundexception.hoteller.Database.CartManager;
 import com.teamnamenotfoundexception.hoteller.R;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity{
 
     private EditText email,pass;
     private Button signIn,signUp;
     private String email_text,pass_text;
-    private FirebaseAuth auth;
+    private FirebaseAuth mAuth;
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         email = (EditText) findViewById(R.id.email);
         pass = (EditText) findViewById(R.id.pass);
-        auth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        progressBar = (ProgressBar) findViewById(R.id.progress);
     }
 
-    @Override
-    public void onClick(View v) {
-
-    }
 
     public void onLoginButtonClicked(View v) {
         Toast.makeText(this, "we will do this", Toast.LENGTH_SHORT).show();
-
-        email = groupId.getText().toString();
-        password = groupPass.getText().toString();
+        email_text = email.getText().toString();
+        pass_text= pass.getText().toString();
         progressBar.setVisibility(View.VISIBLE);
-        if ( email.isEmpty() || password.isEmpty()) {
+        if(!isNetworkAvailableAndConnected()) {
+            Toast.makeText(getApplicationContext(), "get a connection to internet", Toast.LENGTH_SHORT).show();
+        }
+        if ( email_text.isEmpty() || pass_text.isEmpty()) {
             Toast.makeText(getApplicationContext(),"Fill this thing up!",Toast.LENGTH_SHORT).show();
             return;
         }
@@ -53,7 +56,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(getApplicationContext(),"top up first", Toast.LENGTH_SHORT).show();
             return ;
         }
-        mAuth.signInWithEmailAndPassword(email, password)
+        mAuth.signInWithEmailAndPassword(email_text, pass_text)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -61,10 +64,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Toast.makeText(getApplicationContext(), "Check your creds!",
                                     Toast.LENGTH_SHORT).show();
                         } else {
-                            StatusManager.get(getApplicationContext()).setAuth(FirebaseAuth.getInstance());
-                            StatusManager.get(getApplicationContext()).setUser(FirebaseAuth.getInstance().getCurrentUser());
-                            StatusManager.get(getApplicationContext()).setFirebaseDatabase(FirebaseDatabase.getInstance());
-                            startActivity(new Intent(getApplicationContext(), BufferActivity.class));
+                            CartManager.get(getApplicationContext()).setAuth(FirebaseAuth.getInstance());
+                            CartManager.get(getApplicationContext()).setUser(FirebaseAuth.getInstance().getCurrentUser());
+                            CartManager.get(getApplicationContext()).setFirebaseDatabase(FirebaseDatabase.getInstance());
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             Log.i("i", "logging in");
                             finish();
                         }
@@ -81,6 +84,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public void onSignUpButtonClicked(View v) {
         startActivity(new Intent(this, SignupActivity.class));
+        Toast.makeText(getApplicationContext(),"Working!",Toast.LENGTH_SHORT).show();
     }
 }
 

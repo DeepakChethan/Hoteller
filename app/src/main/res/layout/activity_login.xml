@@ -32,14 +32,14 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberPassword"
+            android:inputType="textPassword"
             android:id="@+id/pass"
             android:hint="@string/password"
             android:layout_marginTop="@dimen/dopeDimen"
             />
 
         <Button
-            android:id="@+id/loginBtn"
+            android:id="@+id/lloginBtn"
             style="@style/btnStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
             android:text="@string/login" />
 
         <Button
-            android:id="@+id/signUpButton"
+            android:id="@+id/lsignUpButton"
             style="@style/btnStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
