@@ -1,10 +1,12 @@
 package com.teamnamenotfoundexception.hoteller.Database;
 
+import java.io.Serializable;
+
 /**
  * Created by sagar on 3/13/18.
  */
 
-public class DishItem {
+public class DishItem implements Serializable{
 
     public int mDishId;
     public String mDishName;
