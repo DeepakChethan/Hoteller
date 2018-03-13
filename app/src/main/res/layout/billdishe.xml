@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:padding="@dimen/dopeDimen"
+    android:id="@+id/bdentry"
+    android:weightSum="7"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/itemNumber"
+        android:layout_weight="1"
+        android:text="1."/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/itemTitle"
+        android:layout_weight="4"
+        android:text="Dosa"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/itemPriceQuant"
+        android:layout_weight="1"
+        android:text="1 X 3"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/itemCost"
+        android:layout_weight="1"
+        android:text="100"/>
+
+</LinearLayout>

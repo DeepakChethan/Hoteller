@@ -24,7 +24,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.SettingsActivity" />
-        <activity android:name=".Activities.BillActivity"></activity>
+        <activity android:name=".Activities.BillActivity" />
+        <activity android:name=".Activities.CartActivity"></activity>
     </application>
 
 </manifest>

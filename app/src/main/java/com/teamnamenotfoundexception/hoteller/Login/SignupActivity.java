@@ -56,7 +56,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 if (!task.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Something went wrong!",
                             Toast.LENGTH_SHORT).show();
-                    Log.i(TAG, "onComplete: "+task);
+                    Log.i(TAG, "onComplete: "+task.getResult());
                 } else {
                     Toast.makeText(getApplicationContext(), "Successfully signed up, login to continue", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
