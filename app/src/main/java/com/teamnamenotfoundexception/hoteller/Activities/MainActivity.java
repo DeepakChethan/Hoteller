@@ -19,6 +19,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
@@ -149,8 +151,17 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(getApplicationContext(),CartActivity.class));
         }  else
          if (id == R.id.logout) {
+             try {
 
-            mAuth.signOut();
+                 mAuth.signOut();
+                 mCartManager.setAuth(null);
+                 mCartManager.setFirebaseDatabase(null);
+                 mCartManager.setUser(null);
+                 
+             } catch(Exception e) {
+                 Toast.makeText(getApplicationContext(), "trouble logging you out, check your connection", Toast.LENGTH_SHORT).show();
+             }
+
             Intent intent = new Intent(this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
@@ -158,7 +169,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
-            // TODO logout of the app
+
 
         }
 
