@@ -19,17 +19,16 @@ public class DishItem {
 
 
     public DishItem() {
-
+        this.mQuantity = 1;
     }
 
 
 
-    public DishItem(int dishId, String dishName, String dishType, int price, int quantity, String description, String imagePath) {
+    public DishItem(int dishId, String dishName, String dishType, int price, String description, String imagePath) {
         this.mDishId = dishId;
         this.mDishName = dishName;
         this.mDishType = dishType;
         this.mPrice = price;
-        this.mQuantity = quantity;
         this.mDescription = description;
         this.mImagePath = imagePath ;
         this.isFav = 0;
@@ -41,6 +40,9 @@ public class DishItem {
     public void setIsCart(int a) {isCart = a;};
 
 
+    public int getIsFav(){
+        return isFav;
+    }
     public int getDishId() {
         return mDishId;
     }

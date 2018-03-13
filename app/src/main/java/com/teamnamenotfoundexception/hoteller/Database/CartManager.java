@@ -35,6 +35,8 @@ public class CartManager {
 
     private static CartManager mCartManager = null;
 
+    private ArrayList<Integer> mFavoriteList ;
+
     private int mTotalOrderPrice = 0;
 
 
@@ -46,6 +48,8 @@ public class CartManager {
 
         mUser = null;
 
+        mFavoriteList = new ArrayList<>();
+
         if (mUser != null) Log.i("i", mUser.getEmail());
 
         mCartItems = new ArrayList<>();
@@ -54,8 +58,12 @@ public class CartManager {
 
         mFirebaseDatabase = null;
 
-        mFirebaseHelper = new FirebaseHelper();
+        mFirebaseHelper = new FirebaseHelper(mAppContext);
 
+    }
+
+    public void setFavoriteList(ArrayList<Integer> arrayList) {
+        this.mFavoriteList = arrayList;
     }
 
 
@@ -68,6 +76,45 @@ public class CartManager {
         return mCartManager;
     }
 
+    public void initializeFavoriteList() {
+        try {
+            mFirebaseHelper.fetchFavoriteList(mUser);
+        } catch(Exception e) {
+            Log.i("hkkgja", "error fetching favs");
+        }
+            System.out.println("after fetching favorites");
+            ArrayList<DishItem> s = DishRepository.get(mAppContext).getDishItemsList();
+            ArrayList<Integer> ss = CartManager.get(mAppContext).getFavoriteIdList();
+            System.out.println(ss.size() + " is size of favorited listst");
+            for(int i = 0; i < s.size(); i++) {
+                System.out.println("i" +  "yeah");
+                if( ss.contains(s.get(i).getDishId()) ) {
+                    System.out.println("yeah " + s.get(i).getDishId() + " is a favorite");
+                    s.get(i).setDishFav(1);
+                } else {
+                    System.out.println("yeah" + s.get(i).getDishId() + "not a favorite");
+                }
+            }
+
+    }
+
+    public void addToFavorites(DishItem item) {
+
+        try {
+            CartManager.get(mAppContext).getFavoriteIdList().add(item.getDishId());
+            mFirebaseHelper.updateFavoriteList(mFavoriteList, mUser);
+        } catch(Exception e) {
+            Log.i("error", "cannot update favorite list");
+        }
+    }
+
+    public void removeFromFavorites(DishItem item) {
+
+            CartManager.get(mAppContext).getFavoriteIdList().remove(new Integer(item.getDishId()));
+            mFirebaseHelper.updateFavoriteList(mFavoriteList, mUser);
+
+    }
+
     public void placeOrder() {
         if (mCartItems == null || mCartItems.size() == 0) {
             Toast.makeText(mAppContext, "Your order doesn't have any items. try adding some items from our delicacies, prepared just for you :) ", Toast.LENGTH_LONG).show();
@@ -78,7 +125,18 @@ public class CartManager {
     }
 
     public ArrayList<DishItem> getFavItems() {
-        return mFavItems;
+        ArrayList<DishItem> favoritedItems = new ArrayList<DishItem>();
+        ArrayList<DishItem> alldishlist = DishRepository.get(mAppContext).getDishItemsList();
+        for(int i = 0; i < alldishlist.size(); i++) {
+            if(alldishlist.get(i).isDishFav() == 1) {
+                favoritedItems.add(alldishlist.get(i));
+            }
+        }
+        return favoritedItems;
+    }
+
+    public ArrayList<Integer> getFavoriteIdList() {
+        return mFavoriteList;
     }
 
     public ArrayList<DishItem> getCartItems() {
@@ -86,8 +144,10 @@ public class CartManager {
     }
 
     public void addDishToCart(DishItem item) {
+
         mCartItems.add(item);
         mTotalOrderPrice += item.getTotalPrice();
+
     }
 
     public void addDishToFav(DishItem item) {
@@ -114,6 +174,10 @@ public class CartManager {
         this.mUser = user;
     }
 
+    public void setCartManagerToNull() {
+        mCartManager = null;
+    }
+
     public void setAuth(FirebaseAuth auth) {
         this.mAuth = auth;
     }
@@ -130,6 +194,8 @@ public class CartManager {
     public FirebaseUser getUser() {
         return mUser;
     }
+
+
 
     public FirebaseDatabase getFirebaseDatabase() {
         return mFirebaseDatabase;

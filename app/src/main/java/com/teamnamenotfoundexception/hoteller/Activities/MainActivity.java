@@ -27,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.teamnamenotfoundexception.hoteller.DCAdapter;
 import com.teamnamenotfoundexception.hoteller.Database.DishItem;
 import com.teamnamenotfoundexception.hoteller.Database.CartManager;
+import com.teamnamenotfoundexception.hoteller.Database.DishRepository;
 import com.teamnamenotfoundexception.hoteller.Login.LoginActivity;
 import com.teamnamenotfoundexception.hoteller.R;
 
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
 
+    private DishRepository mDishRepository ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,34 +61,38 @@ public class MainActivity extends AppCompatActivity
 
 
         mCartManager = CartManager.get(getApplicationContext());
+        mDishRepository = DishRepository.get(getApplicationContext());
+
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
         if (mUser == null) {
+            mCartManager.setCartManagerToNull();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
-
-        } else {
-
-
-            CartManager.get(getApplicationContext()).setAuth(FirebaseAuth.getInstance());
-
-            CartManager.get(getApplicationContext()).setUser(FirebaseAuth.getInstance().getCurrentUser());
-
-            CartManager.get(getApplicationContext()).setFirebaseDatabase(FirebaseDatabase.getInstance());
-
-            Log.i("i", "staying here only");
-            Log.i("i", mUser.getEmail());
-
+            return;
         }
+        CartManager.get(getApplicationContext()).setAuth(FirebaseAuth.getInstance());
+        CartManager.get(getApplicationContext()).setUser(FirebaseAuth.getInstance().getCurrentUser());
+        CartManager.get(getApplicationContext()).setFirebaseDatabase(FirebaseDatabase.getInstance());
+        Log.i("i", "staying here only");
+//        Log.i("i", mUser.getEmail());
 
-        dishItems = new ArrayList<>();
-        dishItems.add(new DishItem(1,"Dosa","Tiffin",20,1,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
-        dishItems.add(new DishItem(2,"Dosa","Dinner",20,1,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
-        dishItems.add(new DishItem(3,"Dosa","Lunch",20,1,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
-        dishItems.add(new DishItem(4,"Dosa","Drink",20,1,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
+        mDishRepository.insertAllDishItems();
+        mDishRepository.initializeDishItemsList();
+        mCartManager.initializeFavoriteList();
+
+        dishItems = mDishRepository.getDishItemsList();
+
+   /*    dishItems = new ArrayList<>();
+        dishItems.add(new DishItem(1,"Dosa","Tiffin",20,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
+        dishItems.add(new DishItem(2,"Dosa","Dinner",20,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
+        dishItems.add(new DishItem(3,"Dosa","Lunch",20,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
+        dishItems.add(new DishItem(4,"Dosa","Drink",20,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
+
+*/
 
         // The recycler view
         recyclerView = (RecyclerView) findViewById(R.id.recycle);
@@ -93,7 +100,7 @@ public class MainActivity extends AppCompatActivity
         llm = new LinearLayoutManager(this.getApplicationContext());
         recyclerView.setLayoutManager(llm);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        DCAdapter adapter = new DCAdapter(getApplicationContext(),dishItems);
+        DCAdapter adapter = new DCAdapter(getApplicationContext(), dishItems);
         recyclerView.setAdapter(adapter);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -157,7 +164,9 @@ public class MainActivity extends AppCompatActivity
                  mCartManager.setAuth(null);
                  mCartManager.setFirebaseDatabase(null);
                  mCartManager.setUser(null);
-                 
+                 mCartManager.setCartManagerToNull();
+                 DishRepository.setDishRepository(null);
+
              } catch(Exception e) {
                  Toast.makeText(getApplicationContext(), "trouble logging you out, check your connection", Toast.LENGTH_SHORT).show();
              }
