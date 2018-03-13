@@ -42,12 +42,12 @@ public class MainActivity extends AppCompatActivity
 
     private RecyclerView recyclerView;
     private LinearLayoutManager llm;
-    private ArrayList<DishItem> dishItems;
-    private CartManager mCartManager;
+    private static ArrayList<DishItem> dishItems;
+    private static CartManager mCartManager;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
-
-    private DishRepository mDishRepository ;
+    private static DCAdapter dcAdapter;
+    private static DishRepository mDishRepository ;
 
 
     @Override
@@ -58,8 +58,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-
         mCartManager = CartManager.get(getApplicationContext());
         mDishRepository = DishRepository.get(getApplicationContext());
 
@@ -100,8 +98,12 @@ public class MainActivity extends AppCompatActivity
         llm = new LinearLayoutManager(this.getApplicationContext());
         recyclerView.setLayoutManager(llm);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        DCAdapter adapter = new DCAdapter(getApplicationContext(), dishItems);
-        recyclerView.setAdapter(adapter);
+        dcAdapter = new DCAdapter(this, dishItems);
+        dcAdapter.notifyDataSetChanged();
+        recyclerView.setAdapter(dcAdapter);
+
+
+
 
 
 
@@ -114,6 +116,11 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    public static void updateUI(){
+        dcAdapter.setData(mDishRepository.getDishItemsList());
+        dcAdapter.notifyDataSetChanged();
+
+    }
 
     @Override
     public void onBackPressed() {

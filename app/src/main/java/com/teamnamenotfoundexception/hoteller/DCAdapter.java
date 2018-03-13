@@ -1,5 +1,6 @@
 package com.teamnamenotfoundexception.hoteller;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +16,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.teamnamenotfoundexception.hoteller.Activities.DescriptionActivity;
+import com.teamnamenotfoundexception.hoteller.Activities.MainActivity;
 import com.teamnamenotfoundexception.hoteller.Database.CartManager;
 import com.teamnamenotfoundexception.hoteller.Database.DishItem;
+import com.teamnamenotfoundexception.hoteller.Database.DishRepository;
 
 import java.util.List;
 
@@ -29,10 +32,10 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder>{
     private Context context;
     private List<DishItem> dishItems;
 
-
     public DCAdapter(Context mcontext, List<DishItem> mdishItems) {
         context = mcontext;
         dishItems = mdishItems;
+
     }
 
     @Override
@@ -42,6 +45,15 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder>{
         return new ViewHolder(v);
     }
 
+    public void setData(List<DishItem> items){
+        dishItems = items;
+    }
+    public void updateUI(){
+        DCAdapter adapter = DCAdapter.this;
+        DishRepository dishRepository = DishRepository.get(context);
+        adapter.setData(dishRepository.getDishItemsList());
+        adapter.notifyDataSetChanged();
+    }
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
@@ -76,6 +88,9 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder>{
                     cartManager.removeDishFromCart(dishItem);
                     holder.cartBtn.setImageResource(R.drawable.ic_shopping_cart_black_24dp);
                 }
+
+                updateUI();
+
             }
 
         });
@@ -95,9 +110,13 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder>{
                     holder.heartBtn.setImageResource(R.drawable.ic_favorite_black_24dp);
                 }
                 System.out.println(cartManager.getFavoriteIdList().size());
+                updateUI();
+
             }
         });
+
     }
+
 
 
 
@@ -123,6 +142,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder>{
             heartBtn = (ImageButton) itemView.findViewById(R.id.favBtn);
             itemView.setOnClickListener(this);
         }
+
 
         @Override
         public void onClick(View v) {
