@@ -47,15 +47,15 @@ public class LoginActivity extends AppCompatActivity{
         progressBar.setVisibility(View.VISIBLE);
         if(!isNetworkAvailableAndConnected()) {
             Toast.makeText(getApplicationContext(), "get a connection to internet", Toast.LENGTH_SHORT).show();
-        }
-        if ( email_text.isEmpty() || pass_text.isEmpty()) {
+            progressBar.setVisibility(View.INVISIBLE);
+            return;
+        } else if ( email_text.isEmpty() || pass_text.isEmpty()) {
             Toast.makeText(getApplicationContext(),"Fill this thing up!",Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.INVISIBLE);
             return;
         }
-        if(!isNetworkAvailableAndConnected()) {
-            Toast.makeText(getApplicationContext(),"top up first", Toast.LENGTH_SHORT).show();
-            return ;
-        }
+
+
         mAuth.signInWithEmailAndPassword(email_text, pass_text)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -63,12 +63,16 @@ public class LoginActivity extends AppCompatActivity{
                         if (!task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), "Check your creds!",
                                     Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.INVISIBLE);
                         } else {
                             CartManager.get(getApplicationContext()).setAuth(FirebaseAuth.getInstance());
                             CartManager.get(getApplicationContext()).setUser(FirebaseAuth.getInstance().getCurrentUser());
                             CartManager.get(getApplicationContext()).setFirebaseDatabase(FirebaseDatabase.getInstance());
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
                             Log.i("i", "logging in");
+                            progressBar.setVisibility(View.INVISIBLE);
                             finish();
                         }
                     }
@@ -85,6 +89,13 @@ public class LoginActivity extends AppCompatActivity{
     public void onSignUpButtonClicked(View v) {
         startActivity(new Intent(this, SignupActivity.class));
         Toast.makeText(getApplicationContext(),"Working!",Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }
 

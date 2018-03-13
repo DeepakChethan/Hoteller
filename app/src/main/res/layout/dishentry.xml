@@ -86,7 +86,7 @@
                 android:id="@+id/dish_category"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=""
+                android:layout_weight="1"
                 android:baselineAligned="false"
                 android:text="Non-Veg"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
