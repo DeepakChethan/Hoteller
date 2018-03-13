@@ -6,11 +6,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.teamnamenotfoundexception.hoteller.BillAdapter;
+import com.teamnamenotfoundexception.hoteller.Database.CartManager;
 import com.teamnamenotfoundexception.hoteller.Database.DishItem;
 import com.teamnamenotfoundexception.hoteller.R;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -18,20 +22,32 @@ public class BillActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     ListView listView;
-    ArrayList<DishItem> purchased;
+    TextView billAmt, billTax,billTotal;
+    Float nbillAmt, nbillTax = 18.0f, nbillTotal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill);
         toolbar = (Toolbar) findViewById(R.id.billTools);
         listView = (ListView) findViewById(R.id.bill_dishes);
-        purchased = new ArrayList<>();
-        purchased.add(new DishItem(1,"Dosa","Hot",20,2,"Nice Looking","gothilla"));
-        BillAdapter adapter = new BillAdapter(BillActivity.this,purchased,R.id.bdentry);
+
+        billAmt = (TextView) findViewById(R.id.billAmt);
+        billTax = (TextView) findViewById(R.id.billtax);
+        billTotal = (TextView) findViewById(R.id.billtotal);
+        setItUp();
+        CartManager cartManager = CartManager.get(getApplicationContext());
+        BillAdapter adapter = new BillAdapter(BillActivity.this,cartManager.getCartItems(),R.id.bdentry);
         listView.setAdapter(adapter);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void setItUp() {
+        CartManager cartManager = CartManager.get(getApplicationContext());
+        billAmt.setText(cartManager.getTotalOrderPrice()+" Rs");
+        billTax.setText("18 %");
+        billTotal.setText(cartManager.getFinalTotalOrderPrice(18f)+"Rs ");
     }
 
 

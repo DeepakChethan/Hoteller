@@ -14,6 +14,8 @@ public class DishItem {
     public String mDescription;
     public String mImagePath;
     public int mTotalPrice;
+    public int isFav;
+    public int isCart;
 
 
     public DishItem() {
@@ -30,7 +32,13 @@ public class DishItem {
         this.mQuantity = quantity;
         this.mDescription = description;
         this.mImagePath = imagePath ;
+        this.isFav = 0;
+        this.isCart = 0;
+
     }
+
+    public int getIsCart(){return isCart;}
+    public void setIsCart(int a) {isCart = a;};
 
 
     public int getDishId() {
@@ -45,7 +53,9 @@ public class DishItem {
         this.mQuantity = quantity ;
         this.mPrice = quantity * mPrice;
     }
+    public int isDishFav() { return isFav;};
 
+    public void setDishFav(int a){ isFav = a;}
     public int getQuantity() {
         return mQuantity ;
     }

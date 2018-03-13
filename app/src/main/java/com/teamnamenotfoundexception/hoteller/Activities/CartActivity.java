@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.teamnamenotfoundexception.hoteller.DCAdapter;
+import com.teamnamenotfoundexception.hoteller.Database.CartManager;
 import com.teamnamenotfoundexception.hoteller.Database.DishItem;
 import com.teamnamenotfoundexception.hoteller.R;
 
@@ -20,7 +21,6 @@ import java.util.ArrayList;
 public class CartActivity extends AppCompatActivity {
 
     RecyclerView myrecycle;
-    ArrayList<DishItem> cartItems;
     Toolbar tools;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +31,9 @@ public class CartActivity extends AppCompatActivity {
         setSupportActionBar(tools);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        cartItems= new ArrayList<>();
+        CartManager cartManager = CartManager.get(getApplicationContext());
         myrecycle = (RecyclerView) findViewById(R.id.cartRecycle);
-        DCAdapter myadapter = new DCAdapter(getApplicationContext(),cartItems);
+        DCAdapter myadapter = new DCAdapter(getApplicationContext(),cartManager.getCartItems());
         LinearLayoutManager llm = new LinearLayoutManager(this.getApplicationContext());
         myrecycle.setLayoutManager(llm);
         myrecycle.setItemAnimator(new DefaultItemAnimator());
