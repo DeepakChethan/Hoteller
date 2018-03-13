@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.teamnamenotfoundexception.hoteller.DCAdapter;
 import com.teamnamenotfoundexception.hoteller.Database.DishItem;
 import com.teamnamenotfoundexception.hoteller.Database.CartManager;
@@ -53,17 +54,29 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
+
         mCartManager = CartManager.get(getApplicationContext());
-        mAuth = mCartManager.getAuth();
-        if (mAuth == null) {
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+
+        if (mUser == null) {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
+
         } else {
-            mUser = mAuth.getCurrentUser();
+
+
+            CartManager.get(getApplicationContext()).setAuth(FirebaseAuth.getInstance());
+
+            CartManager.get(getApplicationContext()).setUser(FirebaseAuth.getInstance().getCurrentUser());
+
+            CartManager.get(getApplicationContext()).setFirebaseDatabase(FirebaseDatabase.getInstance());
+
             Log.i("i", "staying here only");
             Log.i("i", mUser.getEmail());
+
         }
 
         dishItems = new ArrayList<>();
@@ -137,22 +150,7 @@ public class MainActivity extends AppCompatActivity
         }  else
          if (id == R.id.logout) {
 
-          CartManager.get(getApplication()).getAuth().signOut();
-
-            if(CartManager.get(getApplicationContext()).getAuth().getCurrentUser() == null) {
-                Log.i("after signing out", "i have logged out");
-            }
-
-            CartManager.get(getApplication()).setAuth(null);
-           Log.i("before logout", CartManager.get(getApplicationContext()).getUser().getEmail());
-            CartManager.get(getApplicationContext()).setUser(null);
-            CartManager.get(getApplicationContext()).setFirebaseDatabase(null);
-
-           if(CartManager.get(getApplicationContext()).getUser() == null) {
-               Log.i("i", "successfully set it");
-           } else {
-               Log.i("i", "not set it to null");
-           }
+            mAuth.signOut();
             Intent intent = new Intent(this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);

@@ -25,13 +25,13 @@ public class FirebaseHelper {
     public void setFirebaseDatabase(FirebaseDatabase firebaseDatabase) {
         mFirebaseDatabase = firebaseDatabase;
         if(firebaseDatabase != null)
-            mDatabaseReference = mFirebaseDatabase.getReference("CustomerData/orders/" );
+            mDatabaseReference = mFirebaseDatabase.getReference("CustomerData/" );
     }
 
 
     public void placeOrder(ArrayList<DishItem> itemsInCart, FirebaseUser user) {
 
-        Log.i("score", "placeOrder called");
+        Log.i("order", "placeOrder called");
 
         OrderObject orderObject= new OrderObject(itemsInCart);
 
@@ -39,14 +39,49 @@ public class FirebaseHelper {
 
         String emailId = emailIdSplit[0];
 
+
         try {
-            mDatabaseReference.child(user.getUid()).child(emailId).push().setValue(orderObject);
+            mDatabaseReference.child(user.getUid()).child(emailId).child("orders").push().setValue(orderObject);
         } catch(Exception e) {
             Log.i("orderError", "error in placing the order");
         }
 
     }
 
+    public void makeFavorite(DishItem dishItem, FirebaseUser user) {
+
+        Log.i("favorite", "make favorite caleld");
+
+        int itemId = dishItem.getDishId();
+
+        String emailIdSplit[] = user.getEmail().split("@");
+        String emailId = emailIdSplit[0];
+
+        FavoriteObject favoriteObject = new FavoriteObject(itemId);
+
+        try {
+
+            mDatabaseReference.child(user.getUid()).child(emailId).child("favorites").push().setValue(favoriteObject);
+
+        } catch(Exception e) {
+
+            Log.i("favoriteError", "error in placing the order");
+
+        }
+
+    }
+
+
+    class FavoriteObject {
+        public int itemId;
+        public FavoriteObject() {
+
+        }
+
+        public FavoriteObject(int dishItemId) {
+            itemId = dishItemId;
+        }
+    }
 
     class OrderObject {
 
