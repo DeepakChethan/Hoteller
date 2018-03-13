@@ -51,4 +51,9 @@ public class CartActivity extends AppCompatActivity {
     public void checkout(View v){
         startActivity(new Intent(getApplicationContext(),BillActivity.class));
     }
+    @Override
+    public void onBackPressed() {
+        finish();
+        startActivity(new Intent(this,MainActivity.class));
+    }
 }

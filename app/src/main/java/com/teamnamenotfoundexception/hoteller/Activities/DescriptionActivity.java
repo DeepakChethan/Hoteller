@@ -18,6 +18,7 @@ public class DescriptionActivity extends AppCompatActivity {
 
     private ImageView dishImg;
     private TextView description;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
