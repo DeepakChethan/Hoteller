@@ -29,7 +29,8 @@
         <activity
             android:name=".Activities.DescriptionActivity"
             android:label="@string/title_activity_description"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Activities.FavoriteActivity"></activity>
     </application>
 
 </manifest>

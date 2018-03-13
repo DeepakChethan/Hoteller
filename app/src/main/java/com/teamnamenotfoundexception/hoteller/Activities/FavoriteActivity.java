@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import com.teamnamenotfoundexception.hoteller.DCAdapter;
 import com.teamnamenotfoundexception.hoteller.Database.DishItem;
@@ -17,28 +16,27 @@ import com.teamnamenotfoundexception.hoteller.R;
 
 import java.util.ArrayList;
 
-public class CartActivity extends AppCompatActivity {
+public class FavoriteActivity extends AppCompatActivity {
 
-    RecyclerView myrecycle;
-    ArrayList<DishItem> cartItems;
     Toolbar tools;
+    ArrayList<DishItem> favItems;
+    RecyclerView myrecycle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart);
-
-        tools = (Toolbar) findViewById(R.id.cartTools);
+        setContentView(R.layout.activity_favorite);
+        tools = (Toolbar) findViewById(R.id.favTools);
         setSupportActionBar(tools);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        cartItems= new ArrayList<>();
-        myrecycle = (RecyclerView) findViewById(R.id.cartRecycle);
-        DCAdapter myadapter = new DCAdapter(getApplicationContext(),cartItems);
+        favItems= new ArrayList<>();
+        myrecycle = (RecyclerView) findViewById(R.id.favRecycle);
+        DCAdapter myadapter = new DCAdapter(getApplicationContext(),favItems);
         LinearLayoutManager llm = new LinearLayoutManager(this.getApplicationContext());
         myrecycle.setLayoutManager(llm);
         myrecycle.setItemAnimator(new DefaultItemAnimator());
         myrecycle.setAdapter(myadapter);
-    }
+}
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -48,7 +46,7 @@ public class CartActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void checkout(View v){
+    public void buyAll(View v){
         startActivity(new Intent(getApplicationContext(),BillActivity.class));
     }
 }
