@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity
 
         // The recycler view
         recyclerView = (RecyclerView) findViewById(R.id.recycle);
+        //RecyclerView.LayoutManager lop = new GridLayoutManager(getApplicationContext(),2);
         llm = new LinearLayoutManager(this.getApplicationContext());
         recyclerView.setLayoutManager(llm);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -118,7 +120,10 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.favs) {
 
-        } else if (id == R.id.logout) {
+        } else if (id == R.id.cart) {
+            startActivity(new Intent(getApplicationContext(),CartActivity.class));
+        }  else
+         if (id == R.id.logout) {
 
 //           // CartManager.get(getApplication()).getAuth().signOut();
 //

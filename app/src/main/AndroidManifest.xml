@@ -25,7 +25,11 @@
         </activity>
         <activity android:name=".Activities.SettingsActivity" />
         <activity android:name=".Activities.BillActivity" />
-        <activity android:name=".Activities.CartActivity"></activity>
+        <activity android:name=".Activities.CartActivity" />
+        <activity
+            android:name=".Activities.DescriptionActivity"
+            android:label="@string/title_activity_description"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
