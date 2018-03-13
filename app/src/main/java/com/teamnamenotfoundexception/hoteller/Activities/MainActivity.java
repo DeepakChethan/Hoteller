@@ -125,22 +125,22 @@ public class MainActivity extends AppCompatActivity
         }  else
          if (id == R.id.logout) {
 
-//           // CartManager.get(getApplication()).getAuth().signOut();
-//
-//            if(CartManager.get(getApplicationContext()).getAuth().getCurrentUser() == null) {
-//                Log.i("after signing out", "i have logged out");
-//            }
+          CartManager.get(getApplication()).getAuth().signOut();
+
+            if(CartManager.get(getApplicationContext()).getAuth().getCurrentUser() == null) {
+                Log.i("after signing out", "i have logged out");
+            }
 
             CartManager.get(getApplication()).setAuth(null);
           //  Log.i("before logout", CartManager.get(getApplicationContext()).getUser().getEmail());
             CartManager.get(getApplicationContext()).setUser(null);
             CartManager.get(getApplicationContext()).setFirebaseDatabase(null);
 
-//            if(CartManager.get(getApplicationContext()).getUser() == null) {
-//                Log.i("i", "successfully set it");
-//            } else {
-//                Log.i("i", "not set it to null");
-//            }
+           if(CartManager.get(getApplicationContext()).getUser() == null) {
+               Log.i("i", "successfully set it");
+           } else {
+               Log.i("i", "not set it to null");
+           }
             Intent intent = new Intent(this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
