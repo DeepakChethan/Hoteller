@@ -83,7 +83,6 @@
                 android:layout_weight="6"
                 android:baselineAligned="false"
                 android:text="Non-Veg"
-
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
             <ImageButton
