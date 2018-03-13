@@ -43,10 +43,10 @@ public class BillAdapter extends ArrayAdapter<DishItem> {
         if (dishItem== null) return v;
 
         viewHolder.title.setText(dishItem.getDishName());
-        viewHolder.number.setText(dishItem.getDishId());
+        viewHolder.number.setText(dishItem.getDishId()+".");
         viewHolder.priceQuant.setText(dishItem.getQuantity()+" X "+dishItem.getPrice());
-        viewHolder.total.setText(dishItem.getTotalPrice());
-        return super.getView(position, convertView, parent);
+        viewHolder.total.setText(dishItem.getTotalPrice()+" Rs");
+        return v;
     }
     class ViewHolder{
         TextView title,priceQuant,total,number;

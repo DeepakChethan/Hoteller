@@ -4,28 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.teamnamenotfoundexception.hoteller.Activities.CartActivity">
+    tools:context="com.teamnamenotfoundexception.hoteller.Activities.FavoriteActivity">
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/cartTools"
+        android:id="@+id/favTools"
         android:background="@color/colorPrimaryDark"
         app:titleTextColor="@color/white"
-        app:title="My Cart"></android.support.v7.widget.Toolbar>
+        app:title="My Favourites"></android.support.v7.widget.Toolbar>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/cartRecycle"
-        android:layout_above="@id/checkoutBtn"
-        android:layout_below="@id/cartTools"></android.support.v7.widget.RecyclerView>
+        android:id="@+id/favRecycle"
+        android:layout_above="@id/buyAllBtn"
+        android:layout_below="@id/favTools"></android.support.v7.widget.RecyclerView>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/checkoutBtn"
-        android:onClick="checkout"
-        android:text="Checkout!"
+        android:id="@+id/buyAllBtn"
+        android:text="Buy All"
+        android:onClick="buyAll"
         android:layout_alignParentBottom="true"
         style="@style/btnStyle"/>
 
