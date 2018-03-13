@@ -19,11 +19,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.teamnamenotfoundexception.hoteller.DCAdapter;
 import com.teamnamenotfoundexception.hoteller.Database.DishItem;
 import com.teamnamenotfoundexception.hoteller.Database.CartManager;
+import com.teamnamenotfoundexception.hoteller.Database.DishRepository;
 import com.teamnamenotfoundexception.hoteller.Login.LoginActivity;
 import com.teamnamenotfoundexception.hoteller.R;
 
@@ -39,8 +43,13 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView recyclerView;
     private LinearLayoutManager llm;
     private ArrayList<DishItem> dishItems;
-    private FirebaseAuth auth;
-    private FirebaseUser user;
+    private CartManager mCartManager;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+
+    private DishRepository mDishRepository ;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,16 +59,40 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        auth= FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
-        if (user == null){
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+
+        mCartManager = CartManager.get(getApplicationContext());
+        mDishRepository = DishRepository.get(getApplicationContext());
+
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+
+        if (mUser == null) {
+            mCartManager.setCartManagerToNull();
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+            return;
         }
-        dishItems = new ArrayList<>();
-        dishItems.add(new DishItem(1,"Dosa","Tiffin",20,1,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
-        dishItems.add(new DishItem(2,"Dosa","Dinner",20,1,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
-        dishItems.add(new DishItem(3,"Dosa","Lunch",20,1,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
-        dishItems.add(new DishItem(4,"Dosa","Drink",20,1,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
+        CartManager.get(getApplicationContext()).setAuth(FirebaseAuth.getInstance());
+        CartManager.get(getApplicationContext()).setUser(FirebaseAuth.getInstance().getCurrentUser());
+        CartManager.get(getApplicationContext()).setFirebaseDatabase(FirebaseDatabase.getInstance());
+        Log.i("i", "staying here only");
+//        Log.i("i", mUser.getEmail());
+
+        mDishRepository.insertAllDishItems();
+        mDishRepository.initializeDishItemsList();
+        mCartManager.initializeFavoriteList();
+
+        dishItems = mDishRepository.getDishItemsList();
+
+   /*    dishItems = new ArrayList<>();
+        dishItems.add(new DishItem(1,"Dosa","Tiffin",20,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
+        dishItems.add(new DishItem(2,"Dosa","Dinner",20,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
+        dishItems.add(new DishItem(3,"Dosa","Lunch",20,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
+        dishItems.add(new DishItem(4,"Dosa","Drink",20,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
+
+*/
 
         // The recycler view
         recyclerView = (RecyclerView) findViewById(R.id.recycle);
@@ -67,7 +100,7 @@ public class MainActivity extends AppCompatActivity
         llm = new LinearLayoutManager(this.getApplicationContext());
         recyclerView.setLayoutManager(llm);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        DCAdapter adapter = new DCAdapter(getApplicationContext(),dishItems);
+        DCAdapter adapter = new DCAdapter(getApplicationContext(), dishItems);
         recyclerView.setAdapter(adapter);
 
 
@@ -80,6 +113,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -128,23 +162,19 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(getApplicationContext(),CartActivity.class));
         }  else
          if (id == R.id.logout) {
+             try {
 
-//           // CartManager.get(getApplication()).getAuth().signOut();
-//
-//            if(CartManager.get(getApplicationContext()).getAuth().getCurrentUser() == null) {
-//                Log.i("after signing out", "i have logged out");
-//            }
+                 mAuth.signOut();
+                 mCartManager.setAuth(null);
+                 mCartManager.setFirebaseDatabase(null);
+                 mCartManager.setUser(null);
+                 mCartManager.setCartManagerToNull();
+                 DishRepository.setDishRepository(null);
 
-            CartManager.get(getApplication()).setAuth(null);
-          //  Log.i("before logout", CartManager.get(getApplicationContext()).getUser().getEmail());
-            CartManager.get(getApplicationContext()).setUser(null);
-            CartManager.get(getApplicationContext()).setFirebaseDatabase(null);
+             } catch(Exception e) {
+                 Toast.makeText(getApplicationContext(), "trouble logging you out, check your connection", Toast.LENGTH_SHORT).show();
+             }
 
-//            if(CartManager.get(getApplicationContext()).getUser() == null) {
-//                Log.i("i", "successfully set it");
-//            } else {
-//                Log.i("i", "not set it to null");
-//            }
             Intent intent = new Intent(this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
@@ -152,7 +182,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
-            // TODO logout of the app
+
 
         }
 

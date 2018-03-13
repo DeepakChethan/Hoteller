@@ -28,6 +28,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private String email_text,pass_text;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

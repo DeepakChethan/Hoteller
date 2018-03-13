@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder>{
     private Context context;
     private List<DishItem> dishItems;
 
+
     public DCAdapter(Context mcontext, List<DishItem> mdishItems) {
         context = mcontext;
         dishItems = mdishItems;
@@ -42,13 +44,23 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+
+
+        Log.i("favorite list onbind", CartManager.get(context).getFavoriteIdList().size() + "");
         final DishItem dishItem = dishItems.get(position);
+
         holder.dishTitle.setText(dishItem.getDishName());
         holder.dishCat.setText(dishItem.getDishType());
         holder.dishCost.setText(dishItem.getPrice()+" Rs");
         Glide.with(context).load(dishItem.getImagePath()).into(holder.dishImage);
-        holder.cartBtn.setImageResource(dishItem.getIsCart() == 0?R.drawable.ic_shopping_cart_black_24dp:R.drawable.ic_shopping_cart_red_24dp);
-        holder.heartBtn.setImageResource(dishItem.isDishFav() == 0?R.drawable.ic_favorite_black_24dp:R.drawable.ic_favorite_red_24dp);
+        boolean isFavorite = CartManager.get(context).getFavoriteIdList().contains(dishItem.getDishId()) ? true : false;
+        if(isFavorite) {
+            dishItem.setDishFav(1);
+        } else {
+            dishItem.setDishFav(0);
+        }
+        holder.cartBtn.setImageResource( dishItem.getIsCart() == 1  ? R.drawable.ic_shopping_cart_red_24dp:R.drawable.ic_shopping_cart_black_24dp);
+        holder.heartBtn.setImageResource(isFavorite == false ? R.drawable.ic_favorite_black_24dp:R.drawable.ic_favorite_red_24dp);
 
 
         holder.cartBtn.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +71,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder>{
                     dishItem.setIsCart(1);
                     cartManager.addDishToCart(dishItem);
                     holder.cartBtn.setImageResource(R.drawable.ic_shopping_cart_red_24dp);
-                }else {
+                } else {
                     dishItem.setIsCart(0);
                     cartManager.removeDishFromCart(dishItem);
                     holder.cartBtn.setImageResource(R.drawable.ic_shopping_cart_black_24dp);
@@ -72,15 +84,17 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder>{
             @Override
             public void onClick(View v) {
                 CartManager cartManager = CartManager.get(context);
+
                 if(dishItem.isDishFav() == 0){
                     dishItem.setDishFav(1);
-                    cartManager.addDishToFav(dishItem);
+                    cartManager.addToFavorites(dishItem);
                     holder.heartBtn.setImageResource(R.drawable.ic_favorite_red_24dp);
-                }else{
+                } else {
                     dishItem.setDishFav(0);
-                    cartManager.removeDishFromFav(dishItem);
+                    cartManager.removeFromFavorites(dishItem);
                     holder.heartBtn.setImageResource(R.drawable.ic_favorite_black_24dp);
                 }
+                System.out.println(cartManager.getFavoriteIdList().size());
             }
         });
     }
