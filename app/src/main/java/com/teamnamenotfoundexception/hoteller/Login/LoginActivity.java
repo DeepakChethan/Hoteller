@@ -1,6 +1,7 @@
 package com.teamnamenotfoundexception.hoteller.Login;
 
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,7 +17,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.teamnamenotfoundexception.hoteller.Activities.MainActivity;
+import com.teamnamenotfoundexception.hoteller.Database.CartManager;
 import com.teamnamenotfoundexception.hoteller.R;
 
 public class LoginActivity extends AppCompatActivity{
@@ -24,7 +27,7 @@ public class LoginActivity extends AppCompatActivity{
     private EditText email,pass;
     private Button signIn,signUp;
     private String email_text,pass_text;
-    private FirebaseAuth auth;
+    private FirebaseAuth mAuth;
     private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,48 +35,67 @@ public class LoginActivity extends AppCompatActivity{
         setContentView(R.layout.activity_login);
         email = (EditText) findViewById(R.id.email);
         pass = (EditText) findViewById(R.id.pass);
-        auth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         progressBar = (ProgressBar) findViewById(R.id.progress);
     }
 
 
-    public void login() {
-        email_text = email.getText().toString();
-        pass_text = pass.getText().toString();
-        if (email_text.isEmpty() && pass_text.isEmpty()){
-            Toast.makeText(getApplicationContext(),"All fields are mandatory!",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        progressBar.setVisibility(View.VISIBLE);
-        auth.signInWithEmailAndPassword(email_text,pass_text).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-
-                if (!task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Check your creds!",
-                            Toast.LENGTH_SHORT).show();
-                } else {
-
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    Log.i("i", "logging in");
-                    finish();
-                }
-
-
-
-
-            }
-        });
-    }
-
     public void onLoginButtonClicked(View v) {
         Toast.makeText(this, "we will do this", Toast.LENGTH_SHORT).show();
-        login();
+        email_text = email.getText().toString();
+        pass_text= pass.getText().toString();
+        progressBar.setVisibility(View.VISIBLE);
+        if(!isNetworkAvailableAndConnected()) {
+            Toast.makeText(getApplicationContext(), "get a connection to internet", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.INVISIBLE);
+            return;
+        } else if ( email_text.isEmpty() || pass_text.isEmpty()) {
+            Toast.makeText(getApplicationContext(),"Fill this thing up!",Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.INVISIBLE);
+            return;
+        }
+
+
+        mAuth.signInWithEmailAndPassword(email_text, pass_text)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Check your creds!",
+                                    Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.INVISIBLE);
+                        } else {
+                            CartManager.get(getApplicationContext()).setAuth(FirebaseAuth.getInstance());
+                            CartManager.get(getApplicationContext()).setUser(FirebaseAuth.getInstance().getCurrentUser());
+                            CartManager.get(getApplicationContext()).setFirebaseDatabase(FirebaseDatabase.getInstance());
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            Log.i("i", "logging in");
+                            progressBar.setVisibility(View.INVISIBLE);
+                            finish();
+                        }
+                    }
+                });
+    }
+
+    private boolean isNetworkAvailableAndConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        boolean isNetworkAvailable = cm.getActiveNetworkInfo() != null;
+        boolean isNetworkConnected = isNetworkAvailable && cm.getActiveNetworkInfo().isConnected();
+        return isNetworkConnected;
     }
 
     public void onSignUpButtonClicked(View v) {
         startActivity(new Intent(this, SignupActivity.class));
         Toast.makeText(getApplicationContext(),"Working!",Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }
 
