@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.teamnamenotfoundexception.hoteller.DCAdapter;
+import com.teamnamenotfoundexception.hoteller.Database.CartManager;
 import com.teamnamenotfoundexception.hoteller.Database.DishItem;
 import com.teamnamenotfoundexception.hoteller.R;
 
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 public class FavoriteActivity extends AppCompatActivity {
 
     Toolbar tools;
-    ArrayList<DishItem> favItems;
+
     RecyclerView myrecycle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +30,9 @@ public class FavoriteActivity extends AppCompatActivity {
         setSupportActionBar(tools);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        favItems= new ArrayList<>();
+        CartManager cartManager = CartManager.get(getApplicationContext());
         myrecycle = (RecyclerView) findViewById(R.id.favRecycle);
-        DCAdapter myadapter = new DCAdapter(getApplicationContext(),favItems);
+        DCAdapter myadapter = new DCAdapter(getApplicationContext(),cartManager.getFavItems());
         LinearLayoutManager llm = new LinearLayoutManager(this.getApplicationContext());
         myrecycle.setLayoutManager(llm);
         myrecycle.setItemAnimator(new DefaultItemAnimator());
