@@ -1,5 +1,6 @@
 package com.teamnamenotfoundexception.hoteller.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -49,7 +50,6 @@ public class MainActivity extends AppCompatActivity
     private static DCAdapter dcAdapter;
     private static DishRepository mDishRepository ;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,14 +83,6 @@ public class MainActivity extends AppCompatActivity
         mCartManager.initializeFavoriteList();
 
         dishItems = mDishRepository.getDishItemsList();
-
-   /*    dishItems = new ArrayList<>();
-        dishItems.add(new DishItem(1,"Dosa","Tiffin",20,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
-        dishItems.add(new DishItem(2,"Dosa","Dinner",20,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
-        dishItems.add(new DishItem(3,"Dosa","Lunch",20,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
-        dishItems.add(new DishItem(4,"Dosa","Drink",20,"This is nice","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSJMXVFN37IhEBdpCBi6hprdsuw61C1ToRahYkkqDShUxBcu0jUFqPzMDxE"));
-
-*/
 
         // The recycler view
         recyclerView = (RecyclerView) findViewById(R.id.recycle);
@@ -160,12 +152,18 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-
+        Activity activity = this;
         if (id == R.id.menu) {
+            if (activity instanceof MainActivity) return true;
+            finish();
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
         } else if (id == R.id.favs) {
+            if (activity instanceof FavoriteActivity) return true;
+            finish();
             startActivity(new Intent(getApplicationContext(),FavoriteActivity.class));
         } else if (id == R.id.cart) {
+            if (activity instanceof CartActivity) return true;
+            finish();
             startActivity(new Intent(getApplicationContext(),CartActivity.class));
         }  else
          if (id == R.id.logout) {

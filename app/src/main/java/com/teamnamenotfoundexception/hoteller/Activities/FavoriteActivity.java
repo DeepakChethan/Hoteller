@@ -47,6 +47,12 @@ public class FavoriteActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        startActivity(new Intent(this,MainActivity.class));
+    }
+
     public void buyAll(View v){
         startActivity(new Intent(getApplicationContext(),BillActivity.class));
     }

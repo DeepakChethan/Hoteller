@@ -89,8 +89,6 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder>{
                     holder.cartBtn.setImageResource(R.drawable.ic_shopping_cart_black_24dp);
                 }
 
-                updateUI();
-
             }
 
         });
@@ -110,7 +108,6 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder>{
                     holder.heartBtn.setImageResource(R.drawable.ic_favorite_black_24dp);
                 }
                 System.out.println(cartManager.getFavoriteIdList().size());
-                updateUI();
 
             }
         });
