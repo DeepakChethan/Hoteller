@@ -35,12 +35,16 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder>{
         dishItems = mdishItems;
     }
 
+
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.dishentry,parent,false);
 
         return new ViewHolder(v);
     }
+
+
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
@@ -130,7 +134,6 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder>{
             intent.putExtra("OBJ",dishItems.get(getPosition()));
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
-
         }
     }
 }

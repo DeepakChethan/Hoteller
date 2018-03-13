@@ -46,9 +46,15 @@ public class MainActivity extends AppCompatActivity
     private CartManager mCartManager;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
+    private static DCAdapter mDCAdapter;
 
     private DishRepository mDishRepository ;
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,16 +79,16 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
             finish();
             return;
+        } else {
+            CartManager.get(getApplicationContext()).setAuth(FirebaseAuth.getInstance());
+            CartManager.get(getApplicationContext()).setUser(FirebaseAuth.getInstance().getCurrentUser());
+            CartManager.get(getApplicationContext()).setFirebaseDatabase(FirebaseDatabase.getInstance());
+            DishRepository.get(getApplicationContext()).initializeDishItemsList();
+            CartManager.get(getApplicationContext()).initializeFavoriteList();
         }
-        CartManager.get(getApplicationContext()).setAuth(FirebaseAuth.getInstance());
-        CartManager.get(getApplicationContext()).setUser(FirebaseAuth.getInstance().getCurrentUser());
-        CartManager.get(getApplicationContext()).setFirebaseDatabase(FirebaseDatabase.getInstance());
         Log.i("i", "staying here only");
 //        Log.i("i", mUser.getEmail());
 
-        mDishRepository.insertAllDishItems();
-        mDishRepository.initializeDishItemsList();
-        mCartManager.initializeFavoriteList();
 
         dishItems = mDishRepository.getDishItemsList();
 
@@ -100,12 +106,8 @@ public class MainActivity extends AppCompatActivity
         llm = new LinearLayoutManager(this.getApplicationContext());
         recyclerView.setLayoutManager(llm);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        DCAdapter adapter = new DCAdapter(getApplicationContext(), dishItems);
-        recyclerView.setAdapter(adapter);
-
-
-
-
+        mDCAdapter = new DCAdapter(getApplicationContext(), dishItems);
+        recyclerView.setAdapter(mDCAdapter);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -114,6 +116,14 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+
+    public static void notifyMe() {
+        Log.i("notifed called", "notifed called");
+        if(mDCAdapter != null) {
+            mDCAdapter.notifyDataSetChanged();
+            System.out.println("notifying");
+        }
+    }
 
     @Override
     public void onBackPressed() {

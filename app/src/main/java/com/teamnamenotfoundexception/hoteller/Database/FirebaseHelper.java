@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.teamnamenotfoundexception.hoteller.Activities.MainActivity;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -103,6 +104,7 @@ public class FirebaseHelper {
                 if(favoriteListIds != null) {
                     CartManager.get(mAppContext).setFavoriteList(new ArrayList<Integer>(favoriteListIds));
                     System.out.println("size of favorite list " + CartManager.get(mAppContext).getFavoriteIdList().size());
+                    MainActivity.notifyMe();
                 }
 
             }
