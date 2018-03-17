@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -15,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.github.zagum.switchicon.SwitchIconView;
+import com.muddzdev.styleabletoastlibrary.StyleableToast;
 import com.teamnamenotfoundexception.hoteller.Activities.DescriptionActivity;
 import com.teamnamenotfoundexception.hoteller.Activities.MainActivity;
 import com.teamnamenotfoundexception.hoteller.Database.CartManager;
@@ -71,9 +74,9 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder>{
         } else {
             dishItem.setDishFav(0);
         }
-        holder.cartBtn.setImageResource( dishItem.getIsCart() == 1  ? R.drawable.ic_shopping_cart_red_24dp:R.drawable.ic_shopping_cart_black_24dp);
-        holder.heartBtn.setImageResource(isFavorite == false ? R.drawable.ic_favorite_black_24dp:R.drawable.ic_favorite_red_24dp);
 
+        if (dishItem.getIsCart() == 1) holder.cartBtn.setIconEnabled(true);
+        if (dishItem.getIsFav() == 1) holder.heartBtn.setIconEnabled(true);
 
         holder.cartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,13 +85,14 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder>{
                 if (dishItem.getIsCart() == 0){
                     dishItem.setIsCart(1);
                     cartManager.addDishToCart(dishItem);
-                    holder.cartBtn.setImageResource(R.drawable.ic_shopping_cart_red_24dp);
+                    holder.cartBtn.setIconEnabled(true,true);
+                    StyleableToast.makeText(context,"Dish added to cart!",R.style.cart_add).show();
                 } else {
                     dishItem.setIsCart(0);
                     cartManager.removeDishFromCart(dishItem);
-                    holder.cartBtn.setImageResource(R.drawable.ic_shopping_cart_black_24dp);
+                    holder.cartBtn.setIconEnabled(false,true);
+                    StyleableToast.makeText(context,"Dish removed from cart!",R.style.cart_rm).show();
                 }
-
             }
 
         });
@@ -101,11 +105,13 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder>{
                 if(dishItem.isDishFav() == 0){
                     dishItem.setDishFav(1);
                     cartManager.addToFavorites(dishItem);
-                    holder.heartBtn.setImageResource(R.drawable.ic_favorite_red_24dp);
+                    holder.heartBtn.setIconEnabled(true,true);
+                    StyleableToast.makeText(context,"Dish added to favorites!",R.style.love_add).show();
                 } else {
                     dishItem.setDishFav(0);
                     cartManager.removeFromFavorites(dishItem);
-                    holder.heartBtn.setImageResource(R.drawable.ic_favorite_black_24dp);
+                    holder.heartBtn.setIconEnabled(false,true);
+                    StyleableToast.makeText(context,"Dish removed from favorites!",R.style.love_rm).show();
                 }
                 System.out.println(cartManager.getFavoriteIdList().size());
 
@@ -127,7 +133,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder>{
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView dishImage;
         public TextView dishCat, dishTitle,dishCost;
-        public ImageButton cartBtn, heartBtn;
+        public SwitchIconView cartBtn, heartBtn;
         public ViewHolder(View itemView) {
             super(itemView);
 
@@ -135,8 +141,8 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder>{
             dishTitle = (TextView) itemView.findViewById(R.id.dish_title);
             dishCost = (TextView) itemView.findViewById(R.id.dish_cost);
             dishCat = (TextView) itemView.findViewById(R.id.dish_category);
-            cartBtn = (ImageButton) itemView.findViewById(R.id.cartBtn);
-            heartBtn = (ImageButton) itemView.findViewById(R.id.favBtn);
+            cartBtn = (SwitchIconView) itemView.findViewById(R.id.cartBtn);
+            heartBtn = (SwitchIconView) itemView.findViewById(R.id.favBtn);
             itemView.setOnClickListener(this);
         }
 

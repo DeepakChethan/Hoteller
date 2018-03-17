@@ -1,6 +1,7 @@
 package com.teamnamenotfoundexception.hoteller.Activities;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity
     private FirebaseUser mUser;
     private static DCAdapter dcAdapter;
     private static DishRepository mDishRepository ;
-
+    private Notification notification;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +61,8 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mCartManager = CartManager.get(getApplicationContext());
         mDishRepository = DishRepository.get(getApplicationContext());
-
+        notification = new Notification(R.id.cart,"Cart Items",1000);
+        notification.number = 200;
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
@@ -141,6 +143,10 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.search) {
             //TODO implement the search
+            return true;
+        }
+        else if (id == R.id.cart){
+            startActivity(new Intent(getApplicationContext(),CartActivity.class));
             return true;
         }
 
