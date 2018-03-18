@@ -31,7 +31,6 @@ public class BillActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bill);
         toolbar = (Toolbar) findViewById(R.id.billTools);
         listView = (ListView) findViewById(R.id.bill_dishes);
-
         billAmt = (TextView) findViewById(R.id.billAmt);
         billTax = (TextView) findViewById(R.id.billTax);
         billId = (TextView) findViewById(R.id.billId);
@@ -61,8 +60,8 @@ public class BillActivity extends AppCompatActivity {
         CartManager cartManager = CartManager.get(getApplicationContext());
 
         billAmt.setText(cartManager.getTotalOrderPrice()+" ");
-        billTax.setText("18 %");
-        billId.setText("23234 2342 2342 23423");
+        billTax.setText("18%");
+        billId.setText("23234 2342 ");
 
 
 

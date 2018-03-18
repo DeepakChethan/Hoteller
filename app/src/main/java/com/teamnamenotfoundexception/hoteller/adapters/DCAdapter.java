@@ -1,5 +1,6 @@
 package com.teamnamenotfoundexception.hoteller.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 
 import android.os.VibrationEffect;
@@ -22,6 +23,8 @@ import com.github.javiersantos.materialstyleddialogs.enums.Style;
 import com.github.zagum.switchicon.SwitchIconView;
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
 import com.shawnlin.numberpicker.NumberPicker;
+import com.teamnamenotfoundexception.hoteller.Activities.CartActivity;
+import com.teamnamenotfoundexception.hoteller.Activities.FavoriteActivity;
 import com.teamnamenotfoundexception.hoteller.Activities.MainActivity;
 import com.teamnamenotfoundexception.hoteller.Database.CartManager;
 import com.teamnamenotfoundexception.hoteller.Database.DishItem;
@@ -35,16 +38,17 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
     private Context context;
     private List<DishItem> dishItems;
     public static int chosenQuantity;
+    private Activity activity;
 
     public DCAdapter(Context mcontext, List<DishItem> mdishItems) {
         context = mcontext;
         dishItems = mdishItems;
+        activity = (Activity) mcontext;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.dishentry,parent,false);
-
+        View  v = LayoutInflater.from(parent.getContext()).inflate(R.layout.dishentrycart, parent, false);
         return new ViewHolder(v);
     }
 
@@ -69,6 +73,14 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
         holder.dishCat.setText(dishItem.getDishType());
         holder.dishCost.setText(dishItem.getPrice()+"");
         Glide.with(context).load(dishItem.getImagePath()).into(holder.dishImage);
+        if (context instanceof CartActivity){
+            holder.x.setVisibility(View.VISIBLE);
+            holder.dishCount.setVisibility(View.VISIBLE);
+            holder.dishCount.setText(dishItem.getQuantity()+"");
+        }else {
+            holder.x.setVisibility(View.GONE);
+            holder.dishCount.setVisibility(View.GONE);
+        }
 
         boolean isFavorite = CartManager.get(context).getFavoriteIdList().contains(dishItem.getDishId()) ? true : false;
 
@@ -139,11 +151,12 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
         public ImageView dishImage;
-        public TextView dishCat, dishTitle,dishCost;
+        public TextView dishCat, dishTitle,dishCost,dishCount,x;
         public SwitchIconView cartBtn, heartBtn;
         public ViewHolder(final View itemView) {
             super(itemView);
-
+            x = (TextView) itemView.findViewById(R.id.x);
+            dishCount = (TextView) itemView.findViewById(R.id.dishCount);
             dishImage = (ImageView)  itemView.findViewById(R.id.food_image);
             dishTitle = (TextView) itemView.findViewById(R.id.dish_title);
             dishCost = (TextView) itemView.findViewById(R.id.dish_cost);
