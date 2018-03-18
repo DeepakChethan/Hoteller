@@ -128,8 +128,6 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
         return dishItems.size();
     }
 
-
-
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
         public ImageView dishImage;
         public TextView dishCat, dishTitle,dishCost;
@@ -188,7 +186,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                 }
             });
 
-            Toast.makeText(context,"This is working",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context,"This is working",Toast.LENGTH_SHORT).show();
         }
 
         @Override
