@@ -34,6 +34,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
 
     private Context context;
     private List<DishItem> dishItems;
+    public static int chosenQuantity;
 
     public DCAdapter(Context mcontext, List<DishItem> mdishItems) {
         context = mcontext;
@@ -61,21 +62,21 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
 
-        Log.i("favorite list onbind", CartManager.get(context).getFavoriteIdList().size() + "");
+       // Log.i("favorite list onbind", CartManager.get(context).getFavoriteIdList().size() + "");
         final DishItem dishItem = dishItems.get(position);
-
+       Log.i("price", "price of dishitem" + dishItem.getDishName() + " " + dishItem.getPrice());
         holder.dishTitle.setText(dishItem.getDishName());
         holder.dishCat.setText(dishItem.getDishType());
         holder.dishCost.setText(dishItem.getPrice()+"");
         Glide.with(context).load(dishItem.getImagePath()).into(holder.dishImage);
 
         boolean isFavorite = CartManager.get(context).getFavoriteIdList().contains(dishItem.getDishId()) ? true : false;
+
         if(isFavorite) {
             dishItem.setDishFav(1);
         } else {
             dishItem.setDishFav(0);
         }
-
 
         if (dishItem.getIsFav() == 1) holder.heartBtn.setIconEnabled(true);
         if (dishItem.getIsCart()== 1) holder.cartBtn.setIconEnabled(true);
@@ -89,6 +90,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                 if(dishItem.isDishFav() == 0){
                     dishItem.setDishFav(1);
                     cartManager.addToFavorites(dishItem);
+
                     holder.heartBtn.setIconEnabled(true,true);
                     StyleableToast.makeText(context,dishItem.getDishName()+"is added to favorites!",R.style.cart_add).show();
                 } else {
@@ -106,13 +108,18 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
             public void onClick(View v) {
                 CartManager cartManager = CartManager.get(context);
                 if(dishItem.getIsCart() == 0){
+
                     dishItem.setIsCart(1);
+
+                    dishItem.setQuantity(1);
+                    Log.i("cart clicked", "cart clicked on item" + dishItem.getPrice());
                     cartManager.addDishToCart(dishItem);
                     holder.cartBtn.setIconEnabled(true,true);
                     StyleableToast.makeText(context,dishItem.getDishName()+" is added to cart!",R.style.love_add).show();
                 } else {
-                    dishItem.setIsCart(0);
                     cartManager.removeDishFromCart(dishItem);
+                    dishItem.setIsCart(0);
+                    dishItem.setQuantity(0);
                     holder.cartBtn.setIconEnabled(false,true);
                     StyleableToast.makeText(context,dishItem.getDishName()+ "is removed from cart!",R.style.love_rm).show();
                 }
@@ -125,7 +132,9 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
+
         return dishItems.size();
+
     }
 
 
@@ -157,6 +166,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
             final DishItem dishItem = dishItems.get(getLayoutPosition());
             final CartManager cartManager = CartManager.get(context);
 
+
             new MaterialStyledDialog.Builder(context)
                     .setTitle(dishItem.getDishName())
                     .setStyle(Style.HEADER_WITH_TITLE)
@@ -165,8 +175,18 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            cartManager.addDishToCart(dishItem);
+                            if(dishItem.getIsCart() == 1) {
+                                cartManager.removeDishFromCart(dishItem);
+                                dishItem.setIsCart(0);
+                            }
+                            dishItem.setQuantity(DCAdapter.chosenQuantity);
+                            DCAdapter.chosenQuantity = 0;
+                            if(dishItem.getIsCart() == 0) {
+                                cartManager.addDishToCart(dishItem);
+                                dishItem.setIsCart(1);
+                            }
                             cartBtn.setIconEnabled(true);
+
                             dialog.dismiss();
 
                         }
@@ -175,6 +195,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                     .onNegative(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            DCAdapter.chosenQuantity = 0;
                             dialog.dismiss();
                         }
                     })
@@ -184,7 +205,8 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
             numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                 @Override
                 public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                    dishItem.setQuantity(newVal);
+                    DCAdapter.chosenQuantity = newVal;
+                    Log.i("adding to quantity ", " the current quantity" + dishItem.getQuantity() + " " + dishItem.getTotalPrice());
                 }
             });
 

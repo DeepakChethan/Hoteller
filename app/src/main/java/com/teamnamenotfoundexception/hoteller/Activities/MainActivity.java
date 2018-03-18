@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     private Notification notification;
 
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity
             CartManager.get(getApplicationContext()).setAuth(FirebaseAuth.getInstance());
             CartManager.get(getApplicationContext()).setUser(FirebaseAuth.getInstance().getCurrentUser());
             CartManager.get(getApplicationContext()).setFirebaseDatabase(FirebaseDatabase.getInstance());
+
             DishRepository.get(getApplicationContext()).initializeDishItemsList();
             CartManager.get(getApplicationContext()).initializeFavoriteList();
         }
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity
 //        Log.i("i", mUser.getEmail());
 
 
-        dishItems = mDishRepository.getDishItemsList();
+        dishItems = new ArrayList<>(mDishRepository.getDishItemsList());
 
         // The recycler view
         recyclerView = (RecyclerView) findViewById(R.id.recycle);
@@ -122,6 +124,15 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        System.out.println("resuming now");
+        mDCAdapter.notifyDataSetChanged();
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
