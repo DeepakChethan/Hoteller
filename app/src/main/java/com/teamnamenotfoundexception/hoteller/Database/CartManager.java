@@ -137,10 +137,9 @@ public class CartManager {
     }
 
     public void addDishToCart(DishItem item) {
-
         mCartItems.add(item);
         mTotalOrderPrice += item.getTotalPrice();
-
+        Log.i("cart ", "item added with price " + item.getPrice() +  " with total price " + item.getTotalPrice() + " " + mTotalOrderPrice);
     }
 
     public void addDishToFav(DishItem item) {
@@ -154,9 +153,10 @@ public class CartManager {
     public void removeDishFromCart(DishItem item) {
         mCartItems.remove(item);
         mTotalOrderPrice -= item.getTotalPrice();
+        item.setQuantity(0);
     }
     public double getFinalTotalOrderPrice(float tax){
-        return mTotalOrderPrice+(mTotalOrderPrice*tax);
+        return mTotalOrderPrice + (mTotalOrderPrice*tax);
     }
 
     public int getTotalOrderPrice() {
@@ -188,10 +188,22 @@ public class CartManager {
         return mUser;
     }
 
-
-
     public FirebaseDatabase getFirebaseDatabase() {
         return mFirebaseDatabase;
+    }
+
+    public void setCartItemsList(ArrayList<DishItem> cartItemsList) {
+        this.mCartItems = cartItemsList;
+    }
+
+    public void resetCartItems() {
+        for(int i = 0; i < mCartItems.size(); i++) {
+            DishItem dishItem = mCartItems.get(i);
+            dishItem.setQuantity(0);
+            dishItem.setIsCart(0);
+        }
+        mCartItems = new ArrayList<>();
+        mTotalOrderPrice = 0;
     }
 
 }

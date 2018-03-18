@@ -37,27 +37,39 @@ public class BillAdapter extends ArrayAdapter<DishItem> {
             v = context.getLayoutInflater().inflate(R.layout.billdishe,parent,false);
             viewHolder = new ViewHolder(v);
             v.setTag(viewHolder);
-        }else{
+        } else {
             viewHolder = (ViewHolder) v.getTag();
         }
+
         DishItem dishItem = billDishItems.get(position);
+
         if (dishItem== null) return v;
 
         viewHolder.title.setText(dishItem.getDishName());
-        viewHolder.priceQuant.setText(dishItem.getQuantity()+" X "+dishItem.getPrice());
+
+        viewHolder.priceQuant.setText(dishItem.getQuantity()+" X "+ dishItem.getPrice());
+
         viewHolder.total.setText(dishItem.getTotalPrice()+" Rs");
+
         return v;
     }
-    class ViewHolder{
+
+    class ViewHolder {
+
         TextView title,priceQuant,total;
+
         ViewHolder(View v){
 
             title = (TextView)v.findViewById(R.id.itemTitle);
+
             priceQuant = (TextView) v.findViewById(R.id.itemPriceQuant);
+
             total = (TextView) v.findViewById(R.id.itemCost);
         }
     }
     public interface inter{
         public int dialoog(DishItem dishItem);
     }
+
+
 }

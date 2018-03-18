@@ -1,5 +1,7 @@
 package com.teamnamenotfoundexception.hoteller.Database;
 
+import android.util.Log;
+
 import java.io.Serializable;
 
 /**
@@ -24,9 +26,22 @@ public class DishItem implements Serializable{
         this.mQuantity = 1;
     }
 
+    public DishItem(DishItem dishItem) {
 
+        this.mDishId = dishItem.getDishId();
+        this.mDishName = dishItem.getDishName();
+        this.mDishType = dishItem.getDishType();
+        this.mPrice = dishItem.getPrice();
+        this.mDescription = dishItem.getDescription();
+        this.mImagePath = dishItem.getImagePath() ;
+        this.isFav = dishItem.getIsFav();
+        this.isCart = dishItem.getIsCart();
+        this.mQuantity = dishItem.getQuantity();
+        this.mTotalPrice = dishItem.getTotalPrice();
+    }
 
     public DishItem(int dishId, String dishName, String dishType, int price, String description, String imagePath) {
+
         this.mDishId = dishId;
         this.mDishName = dishName;
         this.mDishType = dishType;
@@ -54,8 +69,11 @@ public class DishItem implements Serializable{
     }
 
     public void setQuantity (int quantity) {
+
         this.mQuantity = quantity ;
-        this.mPrice = quantity * mPrice;
+        this.mTotalPrice = quantity * mPrice;
+        Log.i("price", "quantity and total price set" + mQuantity + " "  + mTotalPrice);
+
     }
     public int isDishFav() { return isFav;};
 

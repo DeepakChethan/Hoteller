@@ -38,10 +38,10 @@ public class CartActivity extends AppCompatActivity {
 
         ArrayList<DishItem> dishItems = cartManager.getCartItems();
 
-        if (dishItems.isEmpty()){
+        if (dishItems == null || dishItems.size() == 0){
             empty.setVisibility(View.VISIBLE);
             nempty.setVisibility(View.GONE);
-        }else {
+        } else {
             nempty.setVisibility(View.VISIBLE);
             empty.setVisibility(View.GONE);
             myrecycle = (RecyclerView) findViewById(R.id.cartRecycle);
@@ -61,8 +61,12 @@ public class CartActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void checkout(View v){
+    public void checkout(View v) {
+
         startActivity(new Intent(getApplicationContext(),BillActivity.class));
+
+        finish();
+
     }
     @Override
     public void onBackPressed() {

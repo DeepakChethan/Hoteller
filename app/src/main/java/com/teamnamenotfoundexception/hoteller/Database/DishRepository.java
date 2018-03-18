@@ -58,7 +58,6 @@ public class DishRepository  {
             editor.putString("inserted_before", "1");
             editor.apply();
             editor.commit();
-
         }
         else {
             Log.i("i", "it was inserted already");
