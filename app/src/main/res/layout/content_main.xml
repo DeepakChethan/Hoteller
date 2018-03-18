@@ -8,7 +8,6 @@
     tools:context="com.teamnamenotfoundexception.hoteller.Activities.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <!-- TODO Here goes the recycler view-->
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

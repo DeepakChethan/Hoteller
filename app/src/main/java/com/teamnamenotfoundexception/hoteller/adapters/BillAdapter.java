@@ -49,7 +49,7 @@ public class BillAdapter extends ArrayAdapter<DishItem> {
 
         viewHolder.priceQuant.setText(dishItem.getQuantity()+" X "+ dishItem.getPrice());
 
-        viewHolder.total.setText(dishItem.getTotalPrice()*dishItem.getQuantity()+" \u20B9");
+        viewHolder.total.setText(dishItem.getPrice()*dishItem.getQuantity()+" \u20B9");
 
         return v;
     }

@@ -2,8 +2,6 @@ package com.teamnamenotfoundexception.hoteller.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-
-import android.os.VibrationEffect;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,12 +23,11 @@ import com.muddzdev.styleabletoastlibrary.StyleableToast;
 import com.shawnlin.numberpicker.NumberPicker;
 import com.teamnamenotfoundexception.hoteller.Activities.CartActivity;
 import com.teamnamenotfoundexception.hoteller.Activities.FavoriteActivity;
-import com.teamnamenotfoundexception.hoteller.Activities.MainActivity;
 import com.teamnamenotfoundexception.hoteller.Database.CartManager;
 import com.teamnamenotfoundexception.hoteller.Database.DishItem;
-import com.teamnamenotfoundexception.hoteller.Database.DishRepository;
 import com.teamnamenotfoundexception.hoteller.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
@@ -52,16 +49,17 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
         return new ViewHolder(v);
     }
 
+    public void setFilter(ArrayList<DishItem> newList){
+        dishItems = new ArrayList<>();
+        dishItems.addAll(newList);
+        notifyDataSetChanged();
+    }
     public void setData(List<DishItem> items){
-        dishItems = items;
+        dishItems = new ArrayList<>();
+        dishItems.addAll(items);
+        notifyDataSetChanged();
     }
 
-    public void updateUI(){
-        DCAdapter adapter = DCAdapter.this;
-        DishRepository dishRepository = DishRepository.get(context);
-        adapter.setData(dishRepository.getDishItemsList());
-        adapter.notifyDataSetChanged();
-    }
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
@@ -103,11 +101,18 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                     dishItem.setDishFav(1);
                     cartManager.addToFavorites(dishItem);
 
+                    if (activity instanceof FavoriteActivity) {
+                        setData(cartManager.getFavItems());
+                    }
                     holder.heartBtn.setIconEnabled(true,true);
                     StyleableToast.makeText(context,dishItem.getDishName()+"is added to favorites!",R.style.cart_add).show();
                 } else {
                     dishItem.setDishFav(0);
                     cartManager.removeFromFavorites(dishItem);
+                    setData(cartManager.getCartItems());
+                    if (activity instanceof FavoriteActivity) {
+                        setData(cartManager.getFavItems());
+                    }
                     holder.heartBtn.setIconEnabled(false,true);
                     StyleableToast.makeText(context,dishItem.getDishName()+" is removed from favorites!",R.style.cart_rm).show();
                 }
@@ -120,19 +125,23 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
             public void onClick(View v) {
                 CartManager cartManager = CartManager.get(context);
                 if(dishItem.getIsCart() == 0){
-
                     dishItem.setIsCart(1);
-
                     dishItem.setQuantity(1);
                     Log.i("cart clicked", "cart clicked on item" + dishItem.getPrice());
                     cartManager.addDishToCart(dishItem);
                     holder.cartBtn.setIconEnabled(true,true);
+                    if (activity instanceof CartActivity) {
+                        setData(cartManager.getCartItems());
+                    }
                     StyleableToast.makeText(context,dishItem.getDishName()+" is added to cart!",R.style.love_add).show();
                 } else {
                     cartManager.removeDishFromCart(dishItem);
                     dishItem.setIsCart(0);
                     dishItem.setQuantity(0);
                     holder.cartBtn.setIconEnabled(false,true);
+                    if (activity instanceof CartActivity) {
+                        setData(cartManager.getCartItems());
+                    }
                     StyleableToast.makeText(context,dishItem.getDishName()+ "is removed from cart!",R.style.love_rm).show();
                 }
                 System.out.println(cartManager.getFavoriteIdList().size());

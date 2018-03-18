@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        mDCAdapter.setData(mDishRepository.getDishItemsList());
     }
 
     @Override
@@ -138,8 +141,36 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.search);
+        android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String newText) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                newText = newText.toLowerCase();
+                ArrayList<DishItem> newList = new ArrayList<>();
+                dishItems = mDishRepository.getDishItemsList();
+                for(DishItem dishItem: dishItems){
+                    String name = dishItem.getDishName().toLowerCase();
+                    String cat = dishItem.getDishType().toLowerCase();
+                    Log.i("dc",name+" "+newText);
+                    if (name.contains(newText) || cat.contains(newText)){
+                        newList.add(dishItem);
+                    }
+                    mDCAdapter.setFilter(newList);
+                    return true;
+                }
+                return false;
+            }
+        });
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -148,12 +179,8 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.search) {
-            //TODO implement the search
-            return true;
-        }
-        else if (id == R.id.cart){
+
+        if (id == R.id.cart){
             startActivity(new Intent(getApplicationContext(),CartActivity.class));
             return true;
         }
@@ -170,7 +197,6 @@ public class MainActivity extends AppCompatActivity
         Activity activity = this;
         if (id == R.id.menu) {
             if (activity instanceof MainActivity) return true;
-
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
         } else if (id == R.id.favs) {
             if (activity instanceof FavoriteActivity) return true;
@@ -181,7 +207,6 @@ public class MainActivity extends AppCompatActivity
         }  else
          if (id == R.id.logout) {
              try {
-
                  mAuth.signOut();
                  mCartManager.setAuth(null);
                  mCartManager.setFirebaseDatabase(null);
@@ -203,6 +228,7 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
 
 }
