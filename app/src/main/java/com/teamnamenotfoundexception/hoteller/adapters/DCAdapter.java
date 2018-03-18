@@ -38,7 +38,6 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
     public DCAdapter(Context mcontext, List<DishItem> mdishItems) {
         context = mcontext;
         dishItems = mdishItems;
-
     }
 
     @Override
@@ -69,6 +68,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
         holder.dishCat.setText(dishItem.getDishType());
         holder.dishCost.setText(dishItem.getPrice()+"");
         Glide.with(context).load(dishItem.getImagePath()).into(holder.dishImage);
+
         boolean isFavorite = CartManager.get(context).getFavoriteIdList().contains(dishItem.getDishId()) ? true : false;
         if(isFavorite) {
             dishItem.setDishFav(1);
@@ -156,9 +156,9 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
             NumberPicker numberPicker = view.findViewById(R.id.dishCount);
             final DishItem dishItem = dishItems.get(getLayoutPosition());
             final CartManager cartManager = CartManager.get(context);
+
             new MaterialStyledDialog.Builder(context)
                     .setTitle(dishItem.getDishName())
-                    .withDivider(true)
                     .setStyle(Style.HEADER_WITH_TITLE)
                     .setPositiveText("Order")
                     .setCustomView(view,5,5,5,0)
@@ -168,6 +168,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                             cartManager.addDishToCart(dishItem);
                             cartBtn.setIconEnabled(true);
                             dialog.dismiss();
+
                         }
                     })
                     .setNegativeText("Cancel")

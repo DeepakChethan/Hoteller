@@ -42,9 +42,6 @@ public class MainActivity extends AppCompatActivity
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private static DCAdapter mDCAdapter;
-
-    private DishRepository mDishRepository ;
-
     private static DishRepository mDishRepository ;
     private Notification notification;
 
@@ -97,7 +94,7 @@ public class MainActivity extends AppCompatActivity
         llm = new LinearLayoutManager(this.getApplicationContext());
         recyclerView.setLayoutManager(llm);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        mDCAdapter = new DCAdapter(getApplicationContext(), dishItems);
+        mDCAdapter = new DCAdapter(MainActivity.this, dishItems);
         recyclerView.setAdapter(mDCAdapter);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

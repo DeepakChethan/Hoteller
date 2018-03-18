@@ -44,7 +44,7 @@ public class FavoriteActivity extends AppCompatActivity {
             nempty.setVisibility(View.VISIBLE);
             empty.setVisibility(View.GONE);
             myrecycle = (RecyclerView) findViewById(R.id.favRecycle);
-            DCAdapter myadapter = new DCAdapter(getApplicationContext(), cartManager.getFavItems());
+            DCAdapter myadapter = new DCAdapter(FavoriteActivity.this, cartManager.getFavItems());
             LinearLayoutManager llm = new LinearLayoutManager(this.getApplicationContext());
             myrecycle.setLayoutManager(llm);
             myrecycle.setItemAnimator(new DefaultItemAnimator());

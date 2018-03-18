@@ -45,7 +45,7 @@ public class CartActivity extends AppCompatActivity {
             nempty.setVisibility(View.VISIBLE);
             empty.setVisibility(View.GONE);
             myrecycle = (RecyclerView) findViewById(R.id.cartRecycle);
-            DCAdapter myadapter = new DCAdapter(getApplicationContext(), dishItems);
+            DCAdapter myadapter = new DCAdapter(CartActivity.this, dishItems);
             LinearLayoutManager llm = new LinearLayoutManager(this.getApplicationContext());
             myrecycle.setLayoutManager(llm);
             myrecycle.setItemAnimator(new DefaultItemAnimator());
