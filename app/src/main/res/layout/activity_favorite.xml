@@ -10,16 +10,50 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/favTools"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
         app:titleTextColor="@color/white"
         app:title="My Favourites"></android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="22dp"
+        android:id="@+id/fempty"
+        android:layout_height="match_parent"
+        android:layout_below="@id/favTools">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_favorite_red_24dp"
+            android:layout_above="@id/test"
+            android:id="@+id/empty"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/test"
+            android:layout_centerInParent="true"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:text="You don't seem to like anything, like something now?"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fnempty"
+        android:layout_below="@id/favTools"
+        >
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/favRecycle"
+        android:layout_alignParentTop="true"
         android:layout_above="@id/buyAllBtn"
-        android:layout_below="@id/favTools"></android.support.v7.widget.RecyclerView>
-
+        ></android.support.v7.widget.RecyclerView>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,5 +62,6 @@
         android:onClick="buyAll"
         android:layout_alignParentBottom="true"
         style="@style/btnStyle"/>
+    </RelativeLayout>
 
 </RelativeLayout>

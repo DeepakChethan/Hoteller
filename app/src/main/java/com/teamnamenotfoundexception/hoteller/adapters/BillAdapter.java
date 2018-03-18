@@ -1,4 +1,4 @@
-package com.teamnamenotfoundexception.hoteller;
+package com.teamnamenotfoundexception.hoteller.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.teamnamenotfoundexception.hoteller.Database.DishItem;
+import com.teamnamenotfoundexception.hoteller.R;
 
 import java.util.ArrayList;
 
@@ -43,18 +44,20 @@ public class BillAdapter extends ArrayAdapter<DishItem> {
         if (dishItem== null) return v;
 
         viewHolder.title.setText(dishItem.getDishName());
-        viewHolder.number.setText(dishItem.getDishId()+".");
         viewHolder.priceQuant.setText(dishItem.getQuantity()+" X "+dishItem.getPrice());
         viewHolder.total.setText(dishItem.getTotalPrice()+" Rs");
         return v;
     }
     class ViewHolder{
-        TextView title,priceQuant,total,number;
+        TextView title,priceQuant,total;
         ViewHolder(View v){
-            number = (TextView) v.findViewById(R.id.itemNumber);
+
             title = (TextView)v.findViewById(R.id.itemTitle);
             priceQuant = (TextView) v.findViewById(R.id.itemPriceQuant);
             total = (TextView) v.findViewById(R.id.itemCost);
         }
+    }
+    public interface inter{
+        public int dialoog(DishItem dishItem);
     }
 }

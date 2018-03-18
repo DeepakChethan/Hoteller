@@ -41,7 +41,6 @@
     <style name="love_rm" parent="love">
         <item name="colorBackground">#ec1212</item>
     </style>
-
     <style name="cart">
         <item name="textBold">true</item>
         <item name="textColor">@color/white</item>

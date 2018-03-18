@@ -3,16 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/colorPrimary"
     android:layout_height="match_parent"
     tools:context="com.teamnamenotfoundexception.hoteller.Login.LoginActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Login"
-        android:background="@color/colorPrimaryDark"
-        app:titleTextColor="@color/white"
-        android:id="@+id/tools"></android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,22 +17,40 @@
         android:layout_centerInParent="true"
         android:orientation="vertical">
 
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:textColorHint="@color/white"
+            android:layout_height="wrap_content">
         <EditText
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/white"
             android:inputType="textEmailAddress"
             android:text="sagar@s.com" />
+        </android.support.design.widget.TextInputLayout>
 
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:textColorHint="@color/white"
+            android:layout_marginTop="22dp"
+            android:layout_height="wrap_content">
         <EditText
             android:id="@+id/pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dopeDimen"
+            android:backgroundTint="@color/white"
             android:hint="@string/password"
+            android:textColor="@color/white"
             android:inputType="textPassword"
             android:text="sagarcs" />
+        </android.support.design.widget.TextInputLayout>
+
 
         <Button
             android:id="@+id/lloginBtn"
@@ -51,12 +63,15 @@
 
         <Button
             android:id="@+id/lsignUpButton"
-            style="@style/btnStyle"
+            android:textAlignment="center"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:layout_width="match_parent"
+            android:textColor="@color/white"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dopeDimen"
+            android:background="@color/colorPrimary"
             android:onClick="onSignUpButtonClicked"
-            android:text="Sign Up" />
+            android:text="Don't have account ? sign up!" />
 
     </LinearLayout>
 

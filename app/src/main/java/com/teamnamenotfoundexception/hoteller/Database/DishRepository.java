@@ -51,9 +51,9 @@ public class DishRepository  {
 
         if(!isInsertedBefore) {
 
-            mDatabaseHelper.insertDishItem(new DishItem(1001,"Chicken Butter Masala", "Non-Veg", 120,  "The traditional Indian cuisine that will melt your heart","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcwzS_HDWdb7Tep3QDHaDhZlJnQyo4rIKfp8qPzGmgLGbNUS_WhQ"));
-            mDatabaseHelper.insertDishItem(new DishItem(1002,"Chicken Butter Masala", "Non-Veg", 130,  "The traditional Indian cuisine that will melt your heart","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz_fqsFMZryqgtRCiBagoDqWvuhz5qdXzr2QVREc6CnE9RUaw6"));
-            mDatabaseHelper.insertDishItem(new DishItem(1003,"Chicken Butter Masala", "Non-Veg", 135,  "The traditional Indian cuisine that will melt your heart","https://i.ytimg.com/vi/a03U45jFxOI/maxresdefault.jpg"));
+            mDatabaseHelper.insertDishItem(new DishItem(1001,"Biryani", "Non-Veg", 120,  "The traditional Indian cuisine that will melt your heart","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcwzS_HDWdb7Tep3QDHaDhZlJnQyo4rIKfp8qPzGmgLGbNUS_WhQ"));
+            mDatabaseHelper.insertDishItem(new DishItem(1002,"Mango", "Veg", 130,  "The traditional Indian cuisine that will melt your heart","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz_fqsFMZryqgtRCiBagoDqWvuhz5qdXzr2QVREc6CnE9RUaw6"));
+            mDatabaseHelper.insertDishItem(new DishItem(1003,"Pakoda", "Veg", 135,  "The traditional Indian cuisine that will melt your heart","https://i.ytimg.com/vi/a03U45jFxOI/maxresdefault.jpg"));
             SharedPreferences.Editor editor = mSharedPref.edit();
             editor.putString("inserted_before", "1");
             editor.apply();

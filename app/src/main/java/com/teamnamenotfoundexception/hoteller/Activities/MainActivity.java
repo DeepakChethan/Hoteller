@@ -4,15 +4,10 @@ import android.app.Activity;
 import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -23,10 +18,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
-import com.teamnamenotfoundexception.hoteller.DCAdapter;
+import com.teamnamenotfoundexception.hoteller.adapters.BillAdapter;
+import com.teamnamenotfoundexception.hoteller.adapters.DCAdapter;
 import com.teamnamenotfoundexception.hoteller.Database.DishItem;
 import com.teamnamenotfoundexception.hoteller.Database.CartManager;
 import com.teamnamenotfoundexception.hoteller.Database.DishRepository;
@@ -34,13 +31,9 @@ import com.teamnamenotfoundexception.hoteller.Login.LoginActivity;
 import com.teamnamenotfoundexception.hoteller.R;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     private RecyclerView recyclerView;
     private LinearLayoutManager llm;
@@ -51,18 +44,22 @@ public class MainActivity extends AppCompatActivity
     private static DCAdapter dcAdapter;
     private static DishRepository mDishRepository ;
     private Notification notification;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mCartManager = CartManager.get(getApplicationContext());
         mDishRepository = DishRepository.get(getApplicationContext());
+
+
         notification = new Notification(R.id.cart,"Cart Items",1000);
         notification.number = 200;
+
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
@@ -153,6 +150,7 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -161,15 +159,13 @@ public class MainActivity extends AppCompatActivity
         Activity activity = this;
         if (id == R.id.menu) {
             if (activity instanceof MainActivity) return true;
-            finish();
+
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
         } else if (id == R.id.favs) {
             if (activity instanceof FavoriteActivity) return true;
-            finish();
             startActivity(new Intent(getApplicationContext(),FavoriteActivity.class));
         } else if (id == R.id.cart) {
             if (activity instanceof CartActivity) return true;
-            finish();
             startActivity(new Intent(getApplicationContext(),CartActivity.class));
         }  else
          if (id == R.id.logout) {
@@ -191,14 +187,11 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
             finish();
 
-        } else if (id == R.id.nav_share) {
-
-
-
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }

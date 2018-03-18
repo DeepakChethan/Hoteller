@@ -4,77 +4,133 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context="com.teamnamenotfoundexception.hoteller.Activities.BillActivity">
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="90dp"
         android:background="@color/colorPrimaryDark"
         android:id="@+id/billTools"
         app:title="Bill"
+
         app:titleTextColor="@color/white"
         ></android.support.v7.widget.Toolbar>
-    <RelativeLayout
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:elevation="3dp"
+        app:cardCornerRadius="6dp"
+        android:layout_margin="9dp"
+        android:id="@+id/card"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:id="@+id/finalBill"
         android:padding="@dimen/dopeDimen"
+        android:orientation="vertical"
         android:paddingBottom="@dimen/dopeDimen"
         >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/billamttext"
-                style="@style/textStyle"
-                android:text="Bill Amount"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/billAmt"
-                style="@style/textStyle"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:text="2000"/>
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_below="@id/billamttext"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/textStyle"
-            android:id="@+id/billtaxtext"
-            android:text="Bill Tax"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/billtax"
-            style="@style/textStyle"
-            android:layout_below="@id/billAmt"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:text="2000"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_below="@id/billtaxtext"
-            android:layout_height="wrap_content"
-            style="@style/textStyle"
-            android:text="Bill Tax"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/billtotal"
-            style="@style/textStyle"
-            android:layout_below="@id/billtax"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:text="2000"/>
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:text="My Bill"/>
 
-    </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="\u20B9 "
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/billAmt"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:text="8909"
+            android:textAlignment="center"
+            android:textSize="35sp"
+            android:layout_height="wrap_content" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="9dp"
+            android:background="@android:color/darker_gray"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="0dp"
+                android:text="Bill Number"
+                android:layout_weight="2"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:textAlignment="viewEnd"
+                android:layout_gravity="right"
+                android:layout_height="wrap_content"
+                android:text="Tax"
+                />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="3"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="0dp"
+                android:text="23894 234023 234"
+                android:id="@+id/billId"
+                android:layout_weight="2"
+
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:id="@+id/billTax"
+                android:textAlignment="viewEnd"
+
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:layout_gravity="right"
+                android:layout_height="wrap_content"
+                android:text="234"
+                />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+    </android.support.v7.widget.CardView>
 <ListView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@id/billTools"
-    android:layout_above="@+id/finalBill"
-    android:id="@+id/bill-dishes"></ListView>
+    android:layout_below="@id/card"
+    android:id="@+id/bill-dishes">
+
+</ListView>
 
 
 

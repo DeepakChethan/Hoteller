@@ -9,10 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 
-import com.teamnamenotfoundexception.hoteller.DCAdapter;
-import com.teamnamenotfoundexception.hoteller.Database.CartManager;
 import com.teamnamenotfoundexception.hoteller.Database.DishItem;
+import com.teamnamenotfoundexception.hoteller.adapters.DCAdapter;
+import com.teamnamenotfoundexception.hoteller.Database.CartManager;
 import com.teamnamenotfoundexception.hoteller.R;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
     Toolbar tools;
 
+    RelativeLayout empty,nempty;
     RecyclerView myrecycle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +33,23 @@ public class FavoriteActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         CartManager cartManager = CartManager.get(getApplicationContext());
-        myrecycle = (RecyclerView) findViewById(R.id.favRecycle);
-        DCAdapter myadapter = new DCAdapter(getApplicationContext(),cartManager.getFavItems());
-        LinearLayoutManager llm = new LinearLayoutManager(this.getApplicationContext());
-        myrecycle.setLayoutManager(llm);
-        myrecycle.setItemAnimator(new DefaultItemAnimator());
-        myrecycle.setAdapter(myadapter);
+        empty = (RelativeLayout) findViewById(R.id.fempty);
+        nempty = (RelativeLayout) findViewById(R.id.fnempty);
+        ArrayList<DishItem> dishItems = cartManager.getFavItems();
+        if (dishItems.isEmpty()){
+            empty.setVisibility(View.VISIBLE);
+            nempty.setVisibility(View.GONE);
+
+        }else {
+            nempty.setVisibility(View.VISIBLE);
+            empty.setVisibility(View.GONE);
+            myrecycle = (RecyclerView) findViewById(R.id.favRecycle);
+            DCAdapter myadapter = new DCAdapter(getApplicationContext(), cartManager.getFavItems());
+            LinearLayoutManager llm = new LinearLayoutManager(this.getApplicationContext());
+            myrecycle.setLayoutManager(llm);
+            myrecycle.setItemAnimator(new DefaultItemAnimator());
+            myrecycle.setAdapter(myadapter);
+        }
 }
 
     @Override
