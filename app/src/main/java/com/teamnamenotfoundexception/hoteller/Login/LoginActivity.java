@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.teamnamenotfoundexception.hoteller.Activities.MainActivity;
 import com.teamnamenotfoundexception.hoteller.Database.CartManager;
+import com.teamnamenotfoundexception.hoteller.Database.DishRepository;
 import com.teamnamenotfoundexception.hoteller.R;
 
 public class LoginActivity extends AppCompatActivity{
@@ -70,6 +71,9 @@ public class LoginActivity extends AppCompatActivity{
                             CartManager.get(getApplicationContext()).setAuth(FirebaseAuth.getInstance());
                             CartManager.get(getApplicationContext()).setUser(FirebaseAuth.getInstance().getCurrentUser());
                             CartManager.get(getApplicationContext()).setFirebaseDatabase(FirebaseDatabase.getInstance());
+                            DishRepository.get(getApplicationContext()).insertAllDishItems();
+                            DishRepository.get(getApplicationContext()).initializeDishItemsList();
+                            CartManager.get(getApplicationContext()).initializeFavoriteList();
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);

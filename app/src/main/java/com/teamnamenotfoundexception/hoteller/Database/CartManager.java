@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.teamnamenotfoundexception.hoteller.Activities.MainActivity;
 
 import java.util.ArrayList;
 
@@ -82,20 +83,6 @@ public class CartManager {
         } catch(Exception e) {
             Log.i("hkkgja", "error fetching favs");
         }
-            System.out.println("after fetching favorites");
-            ArrayList<DishItem> s = DishRepository.get(mAppContext).getDishItemsList();
-            ArrayList<Integer> ss = CartManager.get(mAppContext).getFavoriteIdList();
-            System.out.println(ss.size() + " is size of favorited listst");
-            for(int i = 0; i < s.size(); i++) {
-                System.out.println("i" +  "yeah");
-                if( ss.contains(s.get(i).getDishId()) ) {
-                    System.out.println("yeah " + s.get(i).getDishId() + " is a favorite");
-                    s.get(i).setDishFav(1);
-                } else {
-                    System.out.println("yeah" + s.get(i).getDishId() + "not a favorite");
-                }
-            }
-
     }
 
     public void addToFavorites(DishItem item) {
@@ -103,15 +90,21 @@ public class CartManager {
         try {
             CartManager.get(mAppContext).getFavoriteIdList().add(item.getDishId());
             mFirebaseHelper.updateFavoriteList(mFavoriteList, mUser);
+            MainActivity.notifyMe();
         } catch(Exception e) {
             Log.i("error", "cannot update favorite list");
         }
     }
 
     public void removeFromFavorites(DishItem item) {
+            try {
+                CartManager.get(mAppContext).getFavoriteIdList().remove(new Integer(item.getDishId()));
+                mFirebaseHelper.updateFavoriteList(mFavoriteList, mUser);
+                MainActivity.notifyMe();
+            } catch(Exception e) {
+                Log.i("error", "cannto update after removing");
 
-            CartManager.get(mAppContext).getFavoriteIdList().remove(new Integer(item.getDishId()));
-            mFirebaseHelper.updateFavoriteList(mFavoriteList, mUser);
+            }
 
     }
 
