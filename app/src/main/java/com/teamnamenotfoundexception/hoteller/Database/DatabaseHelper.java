@@ -33,6 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_DISH_DESCRIPTION = "description";
     private static final String COLUMN_DISH_PRICE = "price";
     private static final String COLUMN_DISH_IMAGE_PATH = "image_path";
+    private static final String COLUMNN_DISH_TAGS = "tags";
 
     public DatabaseHelper(Context context) {
 
@@ -43,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table dishes (" + "dish_id integer primary key autoincrement, dish_name varchar(1000), dish_type varchar(1000), dish_uuid int, description varchar(2000), price int, image_path varchar(2000))");
+        db.execSQL("create table dishes (" + "dish_id integer primary key autoincrement, dish_name varchar(1000), dish_type varchar(1000), dish_uuid int, description varchar(2000), price int, image_path varchar(2000), tags varchar(2000))");
     }
 
     @Override
@@ -52,17 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public long  insertQuestion(DishItem dishItem) {
-        ContentValues cv = new ContentValues();
-        cv.put(COLUMN_DISH_NAME, dishItem.getDishName());
-        cv.put(COLUMN_DISH_TYPE, dishItem.getDishType());
-        cv.put(COLUMN_DISH_PRICE, dishItem.getPrice());
-        cv.put(COLUMN_DISH_IMAGE_PATH, dishItem.getImagePath());
-        cv.put(COLUMN_DISH_DESCRIPTION, dishItem.getDescription());
 
-        Log.i("inserted", "inserted the dish");
-        return getReadableDatabase().insert(TABLE_DISHES, null, cv);
-    }
 
     public void deleteAllRows() {
         getWritableDatabase().delete(TABLE_DISHES, null, null);
@@ -83,6 +74,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_DISH_PRICE, dishItem.getPrice());
         cv.put(COLUMN_DISH_UUID, dishItem.getDishId());
         cv.put(COLUMN_DISH_IMAGE_PATH, dishItem.getImagePath());
+        cv.put(COLUMNN_DISH_TAGS, dishItem.getTags());
         Log.i("inserted", "inserted mate");
         return getReadableDatabase().insert(TABLE_DISHES, null, cv);
 
@@ -99,7 +91,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
 
-        DishItem createNewDishItem(int dishId, String dishName, String dishType, String description, int price, String imagePath) {
+        DishItem createNewDishItem(int dishId, String dishName, String dishType, String description, int price, String imagePath, String tags) {
 
 
             DishItem dishItem = new DishItem();
@@ -109,6 +101,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             dishItem.setDescription(description);
             dishItem.setPrice(price);
             dishItem.setImagePath(imagePath);
+            dishItem.setTags(tags);
             return dishItem;
 
         }
@@ -122,7 +115,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             String description = getString(getColumnIndex(COLUMN_DISH_DESCRIPTION));
             int price = getInt(getColumnIndex(COLUMN_DISH_PRICE));
             String imagePath = getString(getColumnIndex(COLUMN_DISH_IMAGE_PATH));
-            DishItem dishItem = createNewDishItem(dishItemId, dishItemName, dishItemType, description, price, imagePath);
+            String tags = getString(getColumnIndex((COLUMNN_DISH_TAGS)));
+            DishItem dishItem = createNewDishItem(dishItemId, dishItemName, dishItemType, description, price, imagePath, tags);
             Log.i("i", "returning getDishItem");
             return dishItem;
 

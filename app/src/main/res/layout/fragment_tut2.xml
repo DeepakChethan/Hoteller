@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:layout_marginTop="20dp"
-            android:src="@drawable/touch_dialog"/>
+            android:src="@drawable/touch_dialog2"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

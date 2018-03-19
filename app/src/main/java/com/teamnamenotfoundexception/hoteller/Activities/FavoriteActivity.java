@@ -40,7 +40,7 @@ public class FavoriteActivity extends AppCompatActivity {
             empty.setVisibility(View.VISIBLE);
             nempty.setVisibility(View.GONE);
 
-        }else {
+        } else {
             nempty.setVisibility(View.VISIBLE);
             empty.setVisibility(View.GONE);
             myrecycle = (RecyclerView) findViewById(R.id.favRecycle);

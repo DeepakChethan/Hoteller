@@ -73,7 +73,8 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
        Log.i("price", "price of dishitem" + dishItem.getDishName() + " " + dishItem.getPrice());
         holder.dishTitle.setText(dishItem.getDishName());
         holder.dishCat.setText(dishItem.getDishType());
-        holder.tags.setText("nice, tidy");
+
+        holder.tags.setText(dishItem.getTags());
         holder.dishCost.setText(dishItem.getPrice()+"");
         Glide.with(context).load(dishItem.getImagePath()).into(holder.dishImage);
         if (context instanceof CartActivity){
