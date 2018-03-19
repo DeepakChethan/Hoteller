@@ -25,8 +25,8 @@
 
             android:layout_marginTop="10dp"
             android:textSize="20sp"
-            android:text="Tap on the cart icon to add/remove item to your cart
-Or you can favorite/unfavorite the food item by tapping on the heart icon.\nThe nav cart icon shows number of items in cart."
+            android:text="Tap on the Cart icon to add/remove an item to the Cart.
+You can also favorite/unfavorite the food item by tapping on the heart icon.\nThe Cart menu icon displays the number of items in cart."
             android:textAlignment="center"/>
 
         <Button
