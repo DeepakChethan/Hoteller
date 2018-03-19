@@ -193,8 +193,10 @@ public class CartManager {
     }
 
     public void setFirebaseDatabase(FirebaseDatabase firebaseDatabase) {
+
        this.mFirebaseDatabase = firebaseDatabase;
        mFirebaseHelper.setFirebaseDatabase(mFirebaseDatabase);
+
     }
 
     public FirebaseAuth getAuth() {

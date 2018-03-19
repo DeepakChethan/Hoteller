@@ -101,6 +101,8 @@ public class LoginActivity extends AppCompatActivity{
                             Toast.makeText(getApplicationContext(), "Check your creds!",
                                     Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.INVISIBLE);
+                            signIn.setEnabled(true);
+                            signUp.setEnabled(true);
 
                         } else {
                             CartManager.get(getApplicationContext()).setAuth(FirebaseAuth.getInstance());
