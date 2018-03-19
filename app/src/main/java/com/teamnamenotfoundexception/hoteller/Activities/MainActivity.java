@@ -20,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,11 +41,6 @@ import com.teamnamenotfoundexception.hoteller.R;
 
 import java.util.ArrayList;
 
-
-
-
-
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, UpdateNotificationCount {
 
@@ -56,8 +52,8 @@ public class MainActivity extends AppCompatActivity
     private FirebaseUser mUser;
     private static DCAdapter mDCAdapter;
     private static DishRepository mDishRepository ;
-    private Notification notification;
     private TextView notiCount;
+    private ProgressBar progressBar;
 
     int cartCount;
 
@@ -85,12 +81,13 @@ public class MainActivity extends AppCompatActivity
 
         SharedPreferences sp = getSharedPreferences("tut",MODE_PRIVATE);
         Boolean sc = sp.getBoolean("show",false);
-        if (sc == false){
-            sp.edit().putBoolean("show",true).commit();
 
+        if (!sc){
+            sp.edit().putBoolean("show",true).apply();
             Intent intent = new Intent(MainActivity.this, TutorialActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+            Toast.makeText(getApplicationContext(),sp.getBoolean("show",false)+" So taking you there",Toast.LENGTH_SHORT).show();
         }
 
 
@@ -115,7 +112,6 @@ public class MainActivity extends AppCompatActivity
         Log.i("i", "staying here only");
 //        Log.i("i", mUser.getEmail());
 
-
         dishItems = new ArrayList<>(mDishRepository.getDishItemsList());
 
         // The recycler view
@@ -130,8 +126,14 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        progressBar = (ProgressBar) findViewById(R.id.tempProgress);
+        progressBar.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
 

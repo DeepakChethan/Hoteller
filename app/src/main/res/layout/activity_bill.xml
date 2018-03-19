@@ -135,7 +135,7 @@
     <Button
         android:layout_width="match_parent"
         style="@style/btnStyle"
-        android:text="Goto Menu"
+        android:text="Thank you!"
         android:id="@+id/goHome"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

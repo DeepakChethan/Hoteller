@@ -35,7 +35,7 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:fontFamily="casual"
+
             android:textSize="20sp"
             android:textAlignment="center"
             android:text="Welcome to hoteller, an app designed to automate billing process in a single hotel.
