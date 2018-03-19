@@ -61,7 +61,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             progressBar.setVisibility(View.INVISIBLE);
             signUp.setEnabled(true);
             return ;
-        } else if (email_text.isEmpty() && pass_text.isEmpty()){
+        } else if (email_text.isEmpty() || pass_text.isEmpty()){
             Toast.makeText(getApplicationContext(),"All fields are mandatory!",Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.INVISIBLE);
             signUp.setEnabled(true);
@@ -77,7 +77,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (!task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Something went wrong!",
+                    Toast.makeText(getApplicationContext(), "Email/password invalid!",
                             Toast.LENGTH_SHORT).show();
                     try {
                         Log.i(TAG, "onComplete: " + task.getResult());
