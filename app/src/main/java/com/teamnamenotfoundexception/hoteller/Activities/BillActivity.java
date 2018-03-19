@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,7 +24,7 @@ public class BillActivity extends AppCompatActivity {
     Toolbar toolbar;
     ListView listView;
     TextView billAmt, billTax,billId;
-
+    Button btn;
     ArrayList<DishItem> mBillList;
 
     Float nbillAmt, nbillTax = 18.0f, nbillTotal;
@@ -34,6 +36,7 @@ public class BillActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.bill_dishes);
         billAmt = (TextView) findViewById(R.id.billAmt);
         billTax = (TextView) findViewById(R.id.billTax);
+        btn = (Button) findViewById(R.id.goHome);
         billId = (TextView) findViewById(R.id.billId);
         setItUp();
         copyList();
@@ -42,6 +45,12 @@ public class BillActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
     }
 
@@ -59,9 +68,10 @@ public class BillActivity extends AppCompatActivity {
     private void setItUp() {
 
         CartManager cartManager = CartManager.get(getApplicationContext());
-
-        billAmt.setText(cartManager.getTotalOrderPrice()+" ");
-        billTax.setText("18%");
+        int totl = cartManager.getTotalOrderPrice();
+        double taxAmt = Math.round(0.18*totl);
+        billAmt.setText(cartManager.getTotalOrderPrice()+taxAmt+"");
+        billTax.setText(taxAmt+"");
         billId.setText((new Random()).nextInt(50000)+" "+(new Random()).nextInt(50000)+" "+(new Random()).nextInt(50000));
 
 

@@ -24,7 +24,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_favorite_red_24dp"
+            android:src="@drawable/empty_fav_image"
             android:layout_above="@id/test"
             android:id="@+id/empty"/>
 
@@ -33,11 +33,12 @@
             android:layout_height="wrap_content"
             android:id="@+id/test"
             android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            android:textColor="@color/white"
+            android:textColor="@color/colorPrimary"
             android:textStyle="bold"
             android:textAlignment="center"
-            android:text="You don't seem to like anything, like something now?"/>
+            android:text="You don't seem to like anything, add something now?"/>
 
     </RelativeLayout>
 

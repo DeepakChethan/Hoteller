@@ -18,7 +18,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/empty"
-        android:visibility="gone"
+
         android:layout_below="@id/cartTools"
         android:layout_height="match_parent">
 
@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/dummy"
-            android:src="@drawable/ic_favorite_red_24dp"
+            android:src="@drawable/empty_cart_image"
             android:layout_centerInParent="true"/>
         <TextView
             android:layout_width="match_parent"
@@ -37,7 +37,7 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
             android:textStyle="bold"
             android:textSize="20dp"
-            android:text="Tooks so empty, shop now!"
+            android:text="Looks so empty, shop now!"
             />
     </RelativeLayout>
 

@@ -128,10 +128,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@id/card"
+    android:layout_above="@id/goHome"
     android:id="@+id/bill-dishes">
 
 </ListView>
-
+    <Button
+        android:layout_width="match_parent"
+        style="@style/btnStyle"
+        android:text="Goto Menu"
+        android:id="@+id/goHome"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        />
 
 
 </RelativeLayout>

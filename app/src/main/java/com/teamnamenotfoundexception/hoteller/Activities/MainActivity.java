@@ -3,6 +3,7 @@ package com.teamnamenotfoundexception.hoteller.Activities;
 import android.app.Activity;
 import android.app.Notification;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
@@ -82,7 +83,15 @@ public class MainActivity extends AppCompatActivity
         mDishRepository = DishRepository.get(getApplicationContext());
         CartManager.get(getApplicationContext()).setListenerInterface(this);
 
-        startActivity(new Intent(MainActivity.this, TutorialActivity.class));
+        SharedPreferences sp = getSharedPreferences("tut",MODE_PRIVATE);
+        Boolean sc = sp.getBoolean("show",false);
+        if (sc == false){
+            sp.edit().putBoolean("show",true).commit();
+
+            Intent intent = new Intent(MainActivity.this, TutorialActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
 
 
         mAuth = FirebaseAuth.getInstance();
