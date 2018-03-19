@@ -68,6 +68,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
 
        // Log.i("favorite list onbind", CartManager.get(context).getFavoriteIdList().size() + "");
         final DishItem dishItem = dishItems.get(position);
+        holder.setIsRecyclable(false);
        Log.i("price", "price of dishitem" + dishItem.getDishName() + " " + dishItem.getPrice());
         holder.dishTitle.setText(dishItem.getDishName());
         holder.dishCat.setText(dishItem.getDishType());
