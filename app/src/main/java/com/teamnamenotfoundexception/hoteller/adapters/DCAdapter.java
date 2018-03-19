@@ -109,6 +109,16 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                         setData(cartManager.getFavItems());
                     }
                     holder.heartBtn.setIconEnabled(true,true);
+                    final StyleableToast styleableToast = StyleableToast.makeText(context,dishItem.getDishName()+ " is removed from favourites!",R.style.love_rm);
+                    styleableToast.show();
+                    android.os.Handler handler = new android.os.Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            styleableToast.cancel();
+                        }
+                    },1000);
+
 
 
                 } else {
@@ -118,6 +128,16 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                        setData(cartManager.getFavItems());
                    }
                     holder.heartBtn.setIconEnabled(false,true);
+                    final StyleableToast styleableToast = StyleableToast.makeText(context,dishItem.getDishName()+ " is removed from favorites!",R.style.love_rm);
+                    styleableToast.show();
+                    android.os.Handler handler = new android.os.Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            styleableToast.cancel();
+                        }
+                    },1000);
+
 
                 }
             }
@@ -144,7 +164,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                         public void run() {
                             styleableToast.cancel();
                         }
-                    },500);
+                    },1000);
                 } else {
                     cartManager.removeDishFromCart(dishItem);
                     dishItem.setIsCart(0);
@@ -161,9 +181,9 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                         public void run() {
                             styleableToast.cancel();
                         }
-                    },500);
+                    },1000);
                 }
-                System.out.println(cartManager.getFavoriteIdList().size());
+
 
             }
         });
