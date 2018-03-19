@@ -12,9 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linear"
-        android:padding="@dimen/dopeDimen"
-        android:layout_marginTop="@dimen/dopeDimen"
-        android:layout_centerInParent="true"
+        android:paddingRight="@dimen/dopeDimen"
+        android:paddingLeft="@dimen/dopeDimen"
         android:orientation="vertical">
 
         <ImageView
@@ -22,8 +21,14 @@
             android:layout_height="150dp"
             android:id="@+id/log"
             android:layout_gravity="center"
-            android:layout_marginBottom="30dp"
             android:src="@drawable/hoteller_icon"
+            />
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:id="@+id/titl"
+            android:layout_gravity="center"
+            android:src="@drawable/hotellerlogo"
             />
 
         <android.support.design.widget.TextInputLayout

@@ -109,7 +109,6 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                 } else {
                     dishItem.setDishFav(0);
                     cartManager.removeFromFavorites(dishItem);
-                    setData(cartManager.getCartItems());
                     if (activity instanceof FavoriteActivity) {
                         setData(cartManager.getFavItems());
                     }
