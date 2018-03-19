@@ -17,7 +17,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
@@ -46,8 +48,9 @@ public class MainActivity extends AppCompatActivity
     private static DCAdapter mDCAdapter;
     private static DishRepository mDishRepository ;
     private Notification notification;
+    private TextView notiCount;
 
-
+    int cartCount;
 
     @Override
     protected void onResume() {
@@ -65,9 +68,6 @@ public class MainActivity extends AppCompatActivity
         mCartManager = CartManager.get(getApplicationContext());
         mDishRepository = DishRepository.get(getApplicationContext());
 
-
-        notification = new Notification(R.id.cart,"Cart Items",1000);
-        notification.number = 200;
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -129,13 +129,69 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    public void updateCount(final int new_hot_number) {
+        cartCount = new_hot_number;
+        if (notiCount == null) return;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (new_hot_number == 0)
+                    notiCount.setVisibility(View.INVISIBLE);
+                else {
+                    notiCount.setVisibility(View.VISIBLE);
+                    notiCount.setText(Integer.toString(new_hot_number));
+                }
+            }
+        });
+    }
 
+
+    static abstract class MyMenuItemStuffListener implements View.OnClickListener {
+        private String hint;
+        private View view;
+
+        MyMenuItemStuffListener(View view, String hint) {
+            this.view = view;
+            this.hint = hint;
+            view.setOnClickListener(this);
+
+        }
+
+        @Override abstract public void onClick(View v);
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.dcart){
+            startActivity(new Intent(MainActivity.this,CartActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
         MenuItem menuItem = menu.findItem(R.id.search);
+        //MenuItem menuItem1= menu.findItem(R.id.dcart);
+        View dopeCart =  menu.findItem(R.id.dcart).getActionView();
+        if (dopeCart == null){
+
+        }
+        notiCount = (TextView) dopeCart.findViewById(R.id.notiCount);
+        //updateCount(mCartManager.getCartItems().size());
+        /*new MyMenuItemStuffListener(dopeCart,"Show count"){
+
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,CartActivity.class));
+            }
+        };*/
+
+
+
         android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView) MenuItemCompat.getActionView(menuItem);
 
         searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
@@ -184,23 +240,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
         return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-
-        if (id == R.id.cart){
-            startActivity(new Intent(getApplicationContext(),CartActivity.class));
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
 
