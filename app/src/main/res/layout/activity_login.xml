@@ -70,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dopeDimen"
-            android:onClick="onLoginButtonClicked"
+
             android:text="@string/login" />
 
         <Button
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dopeDimen"
             android:background="@color/colorPrimary"
-            android:onClick="onSignUpButtonClicked"
+
             android:text="Don't have account ? sign up!" />
 
     </LinearLayout>
