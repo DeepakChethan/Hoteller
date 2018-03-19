@@ -108,8 +108,8 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                     if (activity instanceof FavoriteActivity) {
                         setData(cartManager.getFavItems());
                     }
-                    holder.heartBtn.setIconEnabled(true,true);
-                    final StyleableToast styleableToast = StyleableToast.makeText(context,dishItem.getDishName()+ " is removed from favourites!",R.style.love_rm);
+                    holder.heartBtn.setIconEnabled(true,false);
+                    final StyleableToast styleableToast = StyleableToast.makeText(context,dishItem.getDishName()+ " is added from favourites!",R.style.love_rm);
                     styleableToast.show();
                     android.os.Handler handler = new android.os.Handler();
                     handler.postDelayed(new Runnable() {
@@ -127,7 +127,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                    if (activity instanceof FavoriteActivity) {
                        setData(cartManager.getFavItems());
                    }
-                    holder.heartBtn.setIconEnabled(false,true);
+                    holder.heartBtn.setIconEnabled(false,false);
                     final StyleableToast styleableToast = StyleableToast.makeText(context,dishItem.getDishName()+ " is removed from favorites!",R.style.love_rm);
                     styleableToast.show();
                     android.os.Handler handler = new android.os.Handler();
@@ -152,7 +152,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                     dishItem.setQuantity(1);
                     Log.i("cart clicked", "cart clicked on item" + dishItem.getPrice());
                     cartManager.addDishToCart(dishItem);
-                    holder.cartBtn.setIconEnabled(true,true);
+                    holder.cartBtn.setIconEnabled(true,false);
                     if (activity instanceof CartActivity) {
                         setData(cartManager.getCartItems());
                     }
@@ -169,7 +169,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                     cartManager.removeDishFromCart(dishItem);
                     dishItem.setIsCart(0);
                     dishItem.setQuantity(0);
-                    holder.cartBtn.setIconEnabled(false,true);
+                    holder.cartBtn.setIconEnabled(false,false);
                     if (activity instanceof CartActivity) {
                         setData(cartManager.getCartItems());
                     }
