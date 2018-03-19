@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity
         mDishRepository = DishRepository.get(getApplicationContext());
         CartManager.get(getApplicationContext()).setListenerInterface(this);
 
-        SharedPreferences sp = getSharedPreferences("tut",MODE_PRIVATE);
+        SharedPreferences sp = getSharedPreferences("tut",getApplicationContext().MODE_PRIVATE);
         Boolean sc = sp.getBoolean("show",false);
 
         if (!sc){
@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             Toast.makeText(getApplicationContext(),sp.getBoolean("show",false)+" So taking you there",Toast.LENGTH_SHORT).show();
+            finish();
+            return;
         }
 
 

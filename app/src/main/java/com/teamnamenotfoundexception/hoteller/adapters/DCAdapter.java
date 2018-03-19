@@ -161,7 +161,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
         public ImageView dishImage;
-        public TextView dishCat, dishTitle,dishCost,dishCount,x,tags;
+        public TextView dishCat, dishTitle,dishCost,dishCount,x;
         public SwitchIconView cartBtn, heartBtn;
         public ViewHolder(final View itemView) {
             super(itemView);
@@ -173,7 +173,6 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
             dishCat = (TextView) itemView.findViewById(R.id.dish_category);
             heartBtn = (SwitchIconView) itemView.findViewById(R.id.favBtn);
             cartBtn = (SwitchIconView) itemView.findViewById(R.id.cartBtn);
-            tags = (TextView) itemView.findViewById(R.id.tags);
             itemView.setOnClickListener(this);
 
         }

@@ -1,6 +1,7 @@
 package com.teamnamenotfoundexception.hoteller.Login;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import com.teamnamenotfoundexception.hoteller.Activities.MainActivity;
 import com.teamnamenotfoundexception.hoteller.Database.CartManager;
 import com.teamnamenotfoundexception.hoteller.Database.DishRepository;
 import com.teamnamenotfoundexception.hoteller.R;
+import com.teamnamenotfoundexception.hoteller.TutorialActivity;
 
 public class LoginActivity extends AppCompatActivity{
 
@@ -35,6 +37,18 @@ public class LoginActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        SharedPreferences sp = getSharedPreferences("tut",getApplicationContext().MODE_PRIVATE);
+        Boolean sc = sp.getBoolean("show",false);
+
+        if (!sc){
+            sp.edit().putBoolean("show",true).apply();
+            Intent intent = new Intent(this, TutorialActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            Toast.makeText(getApplicationContext(),sp.getBoolean("show",false)+" So taking you there",Toast.LENGTH_SHORT).show();
+            finish();
+            return ;
+        }
         email = (EditText) findViewById(R.id.email);
         pass = (EditText) findViewById(R.id.pass);
         signIn = (Button) findViewById(R.id.lloginBtn);
@@ -53,6 +67,8 @@ public class LoginActivity extends AppCompatActivity{
             }
         });
         progressBar = (ProgressBar) findViewById(R.id.progress);
+        signIn = (Button) findViewById(R.id.lloginBtn);
+        signUp = (Button) findViewById(R.id.lsignUpButton);
     }
 
 
