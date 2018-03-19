@@ -100,6 +100,7 @@ public class CartManager {
             try {
                 CartManager.get(mAppContext).getFavoriteIdList().remove(new Integer(item.getDishId()));
                 mFirebaseHelper.updateFavoriteList(mFavoriteList, mUser);
+                System.out.println("removing fav" + item.getDishName());
                 MainActivity.notifyMe();
             } catch(Exception e) {
                 Log.i("error", "cannto update after removing");

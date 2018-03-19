@@ -128,12 +128,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-        System.out.println("resuming now");
-        mDCAdapter.notifyDataSetChanged();
-    }
 
 
 
@@ -165,7 +159,10 @@ public class MainActivity extends AppCompatActivity
                     String name = dishItem.getDishName().toLowerCase();
                     String cat = dishItem.getDishType().toLowerCase();
                     Log.i("dc",name+" "+newText);
-                    if (name.contains(newText) || cat.equals(newText)){
+                    if (name.contains(newText) || cat.equals(newText)) {
+                        if(CartManager.get(getApplicationContext()).getFavoriteIdList().contains(dishItem.getDishId())) {
+                            dishItem.setDishFav(1);
+                        }
                         newList.add(dishItem);
                     }
                     mDCAdapter.setData(newList);
@@ -182,6 +179,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public boolean onClose() {
                 mDCAdapter.setData(mDishRepository.getDishItemsList());
+                System.out.println("oncloselistener");
                 return false;
             }
         });

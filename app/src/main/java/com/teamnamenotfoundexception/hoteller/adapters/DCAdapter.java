@@ -23,6 +23,7 @@ import com.muddzdev.styleabletoastlibrary.StyleableToast;
 import com.shawnlin.numberpicker.NumberPicker;
 import com.teamnamenotfoundexception.hoteller.Activities.CartActivity;
 import com.teamnamenotfoundexception.hoteller.Activities.FavoriteActivity;
+import com.teamnamenotfoundexception.hoteller.Activities.MainActivity;
 import com.teamnamenotfoundexception.hoteller.Database.CartManager;
 import com.teamnamenotfoundexception.hoteller.Database.DishItem;
 import com.teamnamenotfoundexception.hoteller.R;
@@ -55,9 +56,10 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
     public void setData(List<DishItem> items){
-        dishItems = new ArrayList<>();
-        dishItems.addAll(items);
-        notifyDataSetChanged();
+        dishItems = (ArrayList) items;
+       // System.out.println("size is " + items.size());
+       // dishItems.addAll(items);
+        MainActivity.notifyMe();
     }
 
     @Override
@@ -97,25 +99,24 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
             public void onClick(View v) {
                 CartManager cartManager = CartManager.get(context);
 
-                if(dishItem.isDishFav() == 0){
+                if(dishItem.isDishFav() == 0) {
                     dishItem.setDishFav(1);
                     cartManager.addToFavorites(dishItem);
-
-                    if (activity instanceof FavoriteActivity) {
+                 /*   if (activity instanceof FavoriteActivity) {
                         setData(cartManager.getFavItems());
-                    }
+                    }*/
                     holder.heartBtn.setIconEnabled(true,true);
                     StyleableToast.makeText(context,dishItem.getDishName()+"is added to favorites!",R.style.cart_add).show();
                 } else {
                     dishItem.setDishFav(0);
                     cartManager.removeFromFavorites(dishItem);
-                    if (activity instanceof FavoriteActivity) {
+                 /*   if (activity instanceof FavoriteActivity) {
                         setData(cartManager.getFavItems());
-                    }
+                    }*/
                     holder.heartBtn.setIconEnabled(false,true);
                     StyleableToast.makeText(context,dishItem.getDishName()+" is removed from favorites!",R.style.cart_rm).show();
                 }
-                System.out.println(cartManager.getFavoriteIdList().size());
+                System.out.println("size of favorite list " + cartManager.getFavoriteIdList().size());
             }
         });
 
