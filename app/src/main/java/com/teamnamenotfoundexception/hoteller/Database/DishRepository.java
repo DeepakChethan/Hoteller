@@ -51,9 +51,26 @@ public class DishRepository  {
 
         if(!isInsertedBefore) {
 
-            mDatabaseHelper.insertDishItem(new DishItem(1001,"Biryani", "NonVeg", 120,  "The traditional Indian cuisine that will melt your heart","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcwzS_HDWdb7Tep3QDHaDhZlJnQyo4rIKfp8qPzGmgLGbNUS_WhQ"));
-            mDatabaseHelper.insertDishItem(new DishItem(1002,"Mango", "Veg", 130,  "The traditional Indian cuisine that will melt your heart","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz_fqsFMZryqgtRCiBagoDqWvuhz5qdXzr2QVREc6CnE9RUaw6"));
-            mDatabaseHelper.insertDishItem(new DishItem(1003,"Pakoda", "Veg", 135,  "The traditional Indian cuisine that will melt your heart","https://i.ytimg.com/vi/a03U45jFxOI/maxresdefault.jpg"));
+            mDatabaseHelper.insertDishItem(new DishItem(1001,"Chicken Biriyani", "NonVeg", 120,  "The traditional Indian cuisine that will melt your heart","http://blogs.dunyanews.tv/urdu/wp-content/uploads/2018/03/d815e816-4664-472e-990b-d880be41499f-chicken-biryani-recipe.jpg"));
+            mDatabaseHelper.insertDishItem(new DishItem(1002,"Chicken Tandoori", "NonVeg", 400,  "The traditional Indian cuisine that will melt your heart","https://i2.wp.com/media.hungryforever.com/wp-content/uploads/2017/05/10125620/feature-image-tandoori-chicken.jpg?w=1269&strip=all&quality=80"));
+            mDatabaseHelper.insertDishItem(new DishItem(1003,"Chicken Kabab", "NonVeg", 200,  "The traditional Indian cuisine that will melt your heart","https://s-media-cache-ak0.pinimg.com/originals/d1/e4/5e/d1e45e24af1bb5603647e737ba80c341.jpg"));
+            mDatabaseHelper.insertDishItem(new DishItem(1004,"Chicken Butter Masala", "NonVeg", 200,  "The traditional Indian cuisine that will melt your heart","https://i.ytimg.com/vi/a03U45jFxOI/maxresdefault.jpg"));
+            mDatabaseHelper.insertDishItem(new DishItem(1005,"Chicken Grill", "NonVeg", 400,  "The traditional Indian cuisine that will melt your heart","https://fthmb.tqn.com/OofIElcuRkRtwdXyjJHCf5O6DIw=/3865x2576/filters:no_upscale()/two-grilled-chicken-legs-green-onion-dill-and-lime-on-wooden-board-viewed-from-above-508738308-57628f9a3df78c98dcfa5fd8.jpg"));
+            mDatabaseHelper.insertDishItem(new DishItem(1006,"Chicken Tikka", "NonVeg", 200,  "The traditional Indian cuisine that will melt your heart","https://i2.wp.com/media.hungryforever.com/wp-content/uploads/2015/12/09103934/CHicken-REcipe.jpg?w=1269&strip=all&quality=80"));
+            mDatabaseHelper.insertDishItem(new DishItem(1007,"Parota", "Veg", 30,  "The traditional Indian cuisine that will melt your heart","http://2.bp.blogspot.com/-Sdznt6PnBek/Vq0QwPPNY0I/AAAAAAAAGCs/OtdydMZShPU/s1600/IMG_3958.JPG"));
+            mDatabaseHelper.insertDishItem(new DishItem(1008,"Kadai Chicken", "NonVeg", 150,  "The traditional Indian cuisine that will melt your heart","https://1.bp.blogspot.com/-CEd6WNb8EJk/WbTHc8OiVEI/AAAAAAAAv6U/LFdVSfVMAF0OEC6_JaS4zOZq6h2nMM44QCLcBGAs/s1600/3-DSC_0055.JPG"));
+            mDatabaseHelper.insertDishItem(new DishItem(1009,"Chicken Kurma", "NonVeg", 150,  "The traditional Indian cuisine that will melt your heart","http://2.bp.blogspot.com/-zGBkb2rHn6s/T38fvkieQAI/AAAAAAAAO5c/FhlowzCCeXc/s1600/CHIC+KORMA+FIVE.jpg"));
+            mDatabaseHelper.insertDishItem(new DishItem(1010,"Gobi Manchurian", "Veg", 100,  "The traditional Indian cuisine that will melt your heart","https://savourexoticwithsari.files.wordpress.com/2015/01/dscn4900.jpg"));
+            mDatabaseHelper.insertDishItem(new DishItem(1011,"Vegetable Pulav", "Veg", 100,  "The traditional Indian cuisine that will melt your heart","https://droolingfoodies.com/wp-content/uploads/2018/02/veg-biryani.jpg"));
+            mDatabaseHelper.insertDishItem(new DishItem(1012,"Ghee Rice", "Veg", 100,  "The traditional Indian cuisine that will melt your heart","https://3.bp.blogspot.com/-ftkd4cXor5I/WMHi77gQhcI/AAAAAAAAC6c/hcVkvqJ9LZMedaqhqzJQX8RFwXgcqRt4ACLcB/s640/Ghee%2BRice.JPG"));
+            mDatabaseHelper.insertDishItem(new DishItem(1013,"Egg Fried Rice", "NonVeg", 100,  "The traditional Indian cuisine that will melt your heart","https://indianhealthyrecipes.com/wp-content/uploads/2015/12/schezwan-egg-fried-rice-14.jpg"));
+            mDatabaseHelper.insertDishItem(new DishItem(1014,"Paneer Butter Masala", "Veg", 150,  "The traditional Indian cuisine that will melt your heart","https://i.ytimg.com/vi/-BF5H9-Xoh0/maxresdefault.jpg"));
+            mDatabaseHelper.insertDishItem(new DishItem(1015,"Falooda", "Veg", 100,"mane halmado dish",  "http://images-cdn.azureedge.net/azure/in-resources/5294459a-2f80-4db0-a890-4d891abc5ce6/Images/ProductImages/Source/Rose-Falooda.JPG"));
+
+
+
+
+
             SharedPreferences.Editor editor = mSharedPref.edit();
             editor.putString("inserted_before", "1");
             editor.apply();

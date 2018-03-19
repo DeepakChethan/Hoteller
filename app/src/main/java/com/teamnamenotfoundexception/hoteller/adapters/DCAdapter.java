@@ -35,7 +35,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
 
     private Context context;
     private List<DishItem> dishItems;
-    public static int chosenQuantity;
+    public static int chosenQuantity=1;
     private Activity activity;
 
     public DCAdapter(Context mcontext, List<DishItem> mdishItems) {
@@ -200,7 +200,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                                 dishItem.setIsCart(0);
                             }
                             dishItem.setQuantity(DCAdapter.chosenQuantity);
-                            DCAdapter.chosenQuantity = 0;
+                            DCAdapter.chosenQuantity = 1;
                             if(dishItem.getIsCart() == 0) {
                                 cartManager.addDishToCart(dishItem);
                                 dishItem.setIsCart(1);
@@ -215,7 +215,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                     .onNegative(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            DCAdapter.chosenQuantity = 0;
+                            DCAdapter.chosenQuantity = 1;
                             dialog.dismiss();
                         }
                     })
