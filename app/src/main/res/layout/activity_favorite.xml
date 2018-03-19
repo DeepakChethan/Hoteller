@@ -52,16 +52,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/favRecycle"
         android:layout_alignParentTop="true"
-        android:layout_above="@id/buyAllBtn"
+
         />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buyAllBtn"
-        android:text="Buy All"
-        android:onClick="buyAll"
-        android:layout_alignParentBottom="true"
-        style="@style/btnStyle"/>
+
     </RelativeLayout>
 
 </RelativeLayout>

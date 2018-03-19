@@ -26,6 +26,7 @@ import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.teamnamenotfoundexception.hoteller.TutorialActivity;
 import com.teamnamenotfoundexception.hoteller.adapters.BillAdapter;
 import com.teamnamenotfoundexception.hoteller.adapters.DCAdapter;
 import com.teamnamenotfoundexception.hoteller.Database.DishItem;
@@ -67,6 +68,9 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mCartManager = CartManager.get(getApplicationContext());
         mDishRepository = DishRepository.get(getApplicationContext());
+
+
+        startActivity(new Intent(MainActivity.this, TutorialActivity.class));
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -186,7 +190,7 @@ public class MainActivity extends AppCompatActivity
         if (dopeCart == null){
 
         }
-        notiCount = (TextView) dopeCart.findViewById(R.id.notiCount);
+        else notiCount = (TextView) dopeCart.findViewById(R.id.notiCount);
         //updateCount(mCartManager.getCartItems().size());
         /*new MyMenuItemStuffListener(dopeCart,"Show count"){
 

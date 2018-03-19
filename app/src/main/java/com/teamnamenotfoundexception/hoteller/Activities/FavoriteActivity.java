@@ -66,7 +66,5 @@ public class FavoriteActivity extends AppCompatActivity {
         startActivity(new Intent(this,MainActivity.class));
     }
 
-    public void buyAll(View v){
-        startActivity(new Intent(getApplicationContext(),BillActivity.class));
-    }
+
 }
