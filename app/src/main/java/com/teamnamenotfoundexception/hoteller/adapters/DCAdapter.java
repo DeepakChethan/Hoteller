@@ -109,7 +109,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                         setData(cartManager.getFavItems());
                     }
                     holder.heartBtn.setIconEnabled(true,false);
-                    final StyleableToast styleableToast = StyleableToast.makeText(context,dishItem.getDishName()+ " is added from favourites!",R.style.love_rm);
+                    final StyleableToast styleableToast = StyleableToast.makeText(context,dishItem.getDishName()+ " is added to favourites!",R.style.love_rm);
                     styleableToast.show();
                     android.os.Handler handler = new android.os.Handler();
                     handler.postDelayed(new Runnable() {
