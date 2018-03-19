@@ -56,10 +56,10 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
     public void setData(List<DishItem> items){
-        dishItems = (ArrayList) items;
+        dishItems = new ArrayList<>();
        // System.out.println("size is " + items.size());
-       // dishItems.addAll(items);
-        MainActivity.notifyMe();
+        dishItems.addAll(items);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -102,17 +102,17 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                 if(dishItem.isDishFav() == 0) {
                     dishItem.setDishFav(1);
                     cartManager.addToFavorites(dishItem);
-                 /*   if (activity instanceof FavoriteActivity) {
+                    if (activity instanceof FavoriteActivity) {
                         setData(cartManager.getFavItems());
-                    }*/
+                    }
                     holder.heartBtn.setIconEnabled(true,true);
                     StyleableToast.makeText(context,dishItem.getDishName()+"is added to favorites!",R.style.cart_add).show();
                 } else {
                     dishItem.setDishFav(0);
                     cartManager.removeFromFavorites(dishItem);
-                 /*   if (activity instanceof FavoriteActivity) {
-                        setData(cartManager.getFavItems());
-                    }*/
+                   if (activity instanceof FavoriteActivity) {
+                       setData(cartManager.getFavItems());
+                   }
                     holder.heartBtn.setIconEnabled(false,true);
                     StyleableToast.makeText(context,dishItem.getDishName()+" is removed from favorites!",R.style.cart_rm).show();
                 }

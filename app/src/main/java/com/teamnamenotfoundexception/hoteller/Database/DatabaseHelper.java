@@ -22,6 +22,7 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
 
+
     private static final String DB_NAME = "restaurante.sqlite";
     public static final int VERSION = 1;
 

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +27,7 @@ import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.teamnamenotfoundexception.hoteller.Database.UpdateNotificationCount;
 import com.teamnamenotfoundexception.hoteller.adapters.BillAdapter;
 import com.teamnamenotfoundexception.hoteller.adapters.DCAdapter;
 import com.teamnamenotfoundexception.hoteller.Database.DishItem;
@@ -36,8 +38,13 @@ import com.teamnamenotfoundexception.hoteller.R;
 
 import java.util.ArrayList;
 
+
+
+
+
+
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener, UpdateNotificationCount {
 
     private RecyclerView recyclerView;
     private LinearLayoutManager llm;
@@ -51,6 +58,11 @@ public class MainActivity extends AppCompatActivity
     private TextView notiCount;
 
     int cartCount;
+
+    @Override
+    public void updateNotiCount() {
+        updateCount(CartManager.get(getApplicationContext()).getCartItems().size());
+    }
 
     @Override
     protected void onResume() {
@@ -67,7 +79,7 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mCartManager = CartManager.get(getApplicationContext());
         mDishRepository = DishRepository.get(getApplicationContext());
-
+        CartManager.get(getApplicationContext()).setListenerInterface(this);
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -162,13 +174,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.dcart){
-            startActivity(new Intent(MainActivity.this,CartActivity.class));
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -176,19 +181,27 @@ public class MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.menu, menu);
         MenuItem menuItem = menu.findItem(R.id.search);
         //MenuItem menuItem1= menu.findItem(R.id.dcart);
-        View dopeCart =  menu.findItem(R.id.dcart).getActionView();
-        if (dopeCart == null){
+        final MenuItem menuItem1 =  menu.findItem(R.id.dcart);
+        View dopeCart = (View) menuItem1.getActionView();
+        if(dopeCart == null) {
+            Log.i("hey", "hey null mate");
 
+        } else {
+
+            notiCount = dopeCart.findViewById(R.id.notiCount);
+            updateCount(CartManager.get(getApplicationContext()).getCartItems().size());
+
+            new MyMenuItemStuffListener( dopeCart, "hint") {
+
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, CartActivity.class);
+                    startActivity(intent);
+                }
+            };
         }
-        notiCount = (TextView) dopeCart.findViewById(R.id.notiCount);
-        //updateCount(mCartManager.getCartItems().size());
-        /*new MyMenuItemStuffListener(dopeCart,"Show count"){
 
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,CartActivity.class));
-            }
-        };*/
+
 
 
 
