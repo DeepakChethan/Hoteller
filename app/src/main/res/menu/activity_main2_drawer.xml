@@ -24,5 +24,11 @@
             android:title="Logout" />
     </group>
 
+    <item
+        android:id="@+id/help"
+        android:icon="@drawable/ic_help_black_24dp"
+        android:title="Help"
+        ></item>
+
 
 </menu>

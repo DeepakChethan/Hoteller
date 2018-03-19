@@ -35,6 +35,17 @@
             android:layout_height="200dp"
             android:layout_marginTop="20dp"
             android:src="@drawable/touch_dialog"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:text="And place the order."
+            android:textAlignment="center"/>
 
     </LinearLayout>
 

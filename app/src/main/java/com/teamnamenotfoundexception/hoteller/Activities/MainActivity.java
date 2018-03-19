@@ -278,7 +278,10 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.menu) {
             if (activity instanceof MainActivity) return true;
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
-        } else if (id == R.id.favs) {
+        } else if (id == R.id.help){
+            startActivity(new Intent(getApplicationContext(),TutorialActivity.class));
+        }
+        else if (id == R.id.favs) {
             if (activity instanceof FavoriteActivity) return true;
             startActivity(new Intent(getApplicationContext(),FavoriteActivity.class));
         } else if (id == R.id.cart) {

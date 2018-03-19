@@ -25,8 +25,8 @@
 
             android:layout_marginTop="10dp"
             android:textSize="20sp"
-            android:text="Tap on the cart icon to add one unit of food or uncart the food item
-Or you could favorite the food item by tapping on the heart icon."
+            android:text="Tap on the cart icon to add/remove  to your cart
+Or you can favorite/unfavorite the food item by tapping on the heart icon."
             android:textAlignment="center"/>
 
         <Button
