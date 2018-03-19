@@ -43,17 +43,22 @@ public class LoginActivity extends AppCompatActivity{
 
 
     public void onLoginButtonClicked(View v) {
-        Toast.makeText(this, "trying to log you in ", Toast.LENGTH_SHORT).show();
+        signIn.setEnabled(false);
+        signUp.setEnabled(false);
         email_text = email.getText().toString();
         pass_text= pass.getText().toString();
         progressBar.setVisibility(View.VISIBLE);
         if(!isNetworkAvailableAndConnected()) {
             Toast.makeText(getApplicationContext(), "get a connection to internet", Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.INVISIBLE);
+            signIn.setEnabled(true);
+            signUp.setEnabled(true);
             return;
         } else if ( email_text.isEmpty() || pass_text.isEmpty()) {
             Toast.makeText(getApplicationContext(),"Fill this thing up!",Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.INVISIBLE);
+            signIn.setEnabled(true);
+            signUp.setEnabled(true);
             return;
         }
 
@@ -79,6 +84,8 @@ public class LoginActivity extends AppCompatActivity{
                             startActivity(intent);
                             Log.i("i", "logging in");
                             progressBar.setVisibility(View.INVISIBLE);
+                            signIn.setEnabled(true);
+                            signUp.setEnabled(true);
                             finish();
                         }
                     }

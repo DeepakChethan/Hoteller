@@ -35,8 +35,15 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_signup);
         email = (EditText) findViewById(R.id.semail);
         pass = (EditText) findViewById(R.id.spass);
+        signUp = (Button) findViewById(R.id.ssignupBtn);
         auth = FirebaseAuth.getInstance();
         progressBar = (ProgressBar) findViewById(R.id.sprogress);
+        signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSignUpButtonClicked(v);
+            }
+        });
     }
 
     @Override
@@ -44,7 +51,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     }
     public void onSignUpButtonClicked(View v) {
-
+        signUp.setEnabled(false);
         progressBar.setVisibility(View.VISIBLE);
         email_text = email.getText().toString();
         pass_text = pass.getText().toString();
@@ -52,14 +59,17 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         if(!isNetworkAvailableAndConnected()) {
             Toast.makeText(getApplicationContext(),"top up first", Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.INVISIBLE);
+            signUp.setEnabled(true);
             return ;
         } else if (email_text.isEmpty() && pass_text.isEmpty()){
             Toast.makeText(getApplicationContext(),"All fields are mandatory!",Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.INVISIBLE);
+            signUp.setEnabled(true);
             return;
         } else if(pass_text.trim().length() < 6 || pass_text.contains(" ") ) {
             Toast.makeText(getApplicationContext(), "Password should contain 6 characters atleast, no whitespaces", Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.INVISIBLE);
+            signUp.setEnabled(true);
             return;
         }
 
@@ -83,6 +93,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     startActivity(intent);
                     Log.i("i", "logging screen taking you to");
                     progressBar.setVisibility(View.INVISIBLE);
+                    signUp.setEnabled(true);
                     finish();
                 }
 

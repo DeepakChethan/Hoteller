@@ -69,8 +69,7 @@
             style="@style/btnStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop = "22dp"
-            android:onClick="onSignUpButtonClicked"
+            android:layout_marginTop="22dp"
             android:text="Sign up" />
 
     </LinearLayout>
