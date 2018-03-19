@@ -4,6 +4,7 @@ package com.teamnamenotfoundexception.hoteller.Database;
  * Created by sagar on 3/13/18.
  */
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
@@ -40,6 +41,8 @@ public class CartManager {
 
     private int mTotalOrderPrice = 0;
 
+    private UpdateNotificationCount mUpdateNotificationCount;
+
 
     private CartManager(Context context) {
 
@@ -61,7 +64,12 @@ public class CartManager {
 
         mFirebaseHelper = new FirebaseHelper(mAppContext);
 
+        mUpdateNotificationCount = null;
+
+
     }
+
+
 
     public void setFavoriteList(ArrayList<Integer> arrayList) {
         this.mFavoriteList = arrayList;
@@ -75,6 +83,12 @@ public class CartManager {
             Log.i("i", "Cart Manager initialized");
         }
         return mCartManager;
+    }
+
+    public void setListenerInterface(Activity activity) {
+            if(activity != null) {
+                mUpdateNotificationCount = (MainActivity)activity;
+            }
     }
 
     public void initializeFavoriteList() {
@@ -100,6 +114,7 @@ public class CartManager {
             try {
                 CartManager.get(mAppContext).getFavoriteIdList().remove(new Integer(item.getDishId()));
                 mFirebaseHelper.updateFavoriteList(mFavoriteList, mUser);
+                System.out.println("removing fav" + item.getDishName());
                 MainActivity.notifyMe();
             } catch(Exception e) {
                 Log.i("error", "cannto update after removing");
@@ -139,6 +154,7 @@ public class CartManager {
     public void addDishToCart(DishItem item) {
         mCartItems.add(item);
         mTotalOrderPrice += item.getTotalPrice();
+        mUpdateNotificationCount.updateNotiCount();
         Log.i("cart ", "item added with price " + item.getPrice() +  " with total price " + item.getTotalPrice() + " " + mTotalOrderPrice);
     }
 
@@ -152,6 +168,7 @@ public class CartManager {
 
     public void removeDishFromCart(DishItem item) {
         mCartItems.remove(item);
+        mUpdateNotificationCount.updateNotiCount();
         mTotalOrderPrice -= item.getTotalPrice();
         item.setQuantity(0);
     }

@@ -62,7 +62,7 @@ public class FirebaseHelper {
 
     public void updateFavoriteList(ArrayList favoriteListItem, FirebaseUser user) {
 
-        Log.i("favorite", "make favorite caleld");
+        Log.i("favorite", "update favorite caleld");
 
 
         String emailId = getEmailStripped(user.getEmail());

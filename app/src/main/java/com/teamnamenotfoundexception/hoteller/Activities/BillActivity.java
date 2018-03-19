@@ -15,6 +15,7 @@ import com.teamnamenotfoundexception.hoteller.R;
 import com.teamnamenotfoundexception.hoteller.adapters.DCAdapter;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class BillActivity extends AppCompatActivity {
 
@@ -61,7 +62,7 @@ public class BillActivity extends AppCompatActivity {
 
         billAmt.setText(cartManager.getTotalOrderPrice()+" ");
         billTax.setText("18%");
-        billId.setText("23234 2342 ");
+        billId.setText((new Random()).nextInt(50000)+" "+(new Random()).nextInt(50000)+" "+(new Random()).nextInt(50000));
 
 
 

@@ -11,10 +11,11 @@
 
     <item
 
-        android:title="Cart"
-        android:actionLayout="@layout/action_bar_notification_icon"
         android:id="@+id/dcart"
+        app:actionLayout="@layout/action_bar_notification_icon"
+        android:checkable="false"
+        android:enabled="false"
         android:icon="@drawable/ic_shopping_cart_black_24dp"
-        app:showAsAction="always"
-        />
+        android:title="Cart"
+        app:showAsAction="always" />
 </menu>
