@@ -20,7 +20,6 @@
         <activity android:name=".Login.SignupActivity" />
         <activity
             android:name=".Activities.MainActivity"
-            android:label="@string/title_activity_main"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +32,6 @@
         <activity android:name=".Activities.FavoriteActivity" />
         <activity
             android:name=".TutorialActivity"
-            android:label="@string/title_activity_tutorial"
             android:theme="@style/AppTheme"></activity>
     </application>
 
