@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, TutorialActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-            Toast.makeText(getApplicationContext(),sp.getBoolean("show",false)+" So taking you there",Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getApplicationContext(),sp.getBoolean("show",false)+" So taking you there",Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -242,8 +242,9 @@ public class MainActivity extends AppCompatActivity
                     DishItem dishItem = dishItems.get(i);
                     String name = dishItem.getDishName().toLowerCase();
                     String cat = dishItem.getDishType().toLowerCase();
+                    String tag = dishItem.getTags().toLowerCase();
                     Log.i("dc",name+" "+newText);
-                    if (name.contains(newText) || cat.equals(newText)) {
+                    if (name.contains(newText) || cat.equals(newText) || tag.contains(newText)) {
                        // if(CartManager.get(getApplicationContext()).getFavoriteIdList().contains(dishItem.getDishId())) {
                        //     dishItem.setDishFav(1);
                        // }
@@ -300,7 +301,7 @@ public class MainActivity extends AppCompatActivity
                  DishRepository.setDishRepository(null);
 
              } catch(Exception e) {
-                 Toast.makeText(getApplicationContext(), "trouble logging you out, check your connection", Toast.LENGTH_SHORT).show();
+                 Toast.makeText(getApplicationContext(), "Trouble logging you out. Check your connection!", Toast.LENGTH_SHORT).show();
              }
 
             Intent intent = new Intent(this, LoginActivity.class);

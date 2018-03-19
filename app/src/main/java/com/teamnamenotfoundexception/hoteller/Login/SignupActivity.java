@@ -57,7 +57,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         pass_text = pass.getText().toString();
 
         if(!isNetworkAvailableAndConnected()) {
-            Toast.makeText(getApplicationContext(),"top up first", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Network is not connected.", Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.INVISIBLE);
             signUp.setEnabled(true);
             return ;
@@ -67,7 +67,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             signUp.setEnabled(true);
             return;
         } else if(pass_text.trim().length() < 6 || pass_text.contains(" ") ) {
-            Toast.makeText(getApplicationContext(), "Password should contain 6 characters atleast, no whitespaces", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Password should be minimum 6 characters.", Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.INVISIBLE);
             signUp.setEnabled(true);
             return;
@@ -82,12 +82,13 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     try {
                         Log.i(TAG, "onComplete: " + task.getResult());
                     } catch(Exception e) {
-                        Toast.makeText(getApplicationContext(), "email name might already exist", Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(getApplicationContext(), "use a proper email id", Toast.LENGTH_SHORT).show();
                     } finally {
                         progressBar.setVisibility(View.INVISIBLE);
+                        signUp.setEnabled(true);
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Successfully signed up, login to continue", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Successfully signed up!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);

@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity{
             Intent intent = new Intent(this, TutorialActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-            Toast.makeText(getApplicationContext(),sp.getBoolean("show",false)+" So taking you there",Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getApplicationContext(),sp.getBoolean("show",false)+" So taking you there",Toast.LENGTH_SHORT).show();
             finish();
             return ;
         }
@@ -79,13 +79,13 @@ public class LoginActivity extends AppCompatActivity{
         pass_text= pass.getText().toString();
         progressBar.setVisibility(View.VISIBLE);
         if(!isNetworkAvailableAndConnected()) {
-            Toast.makeText(getApplicationContext(), "get a connection to internet", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Network is not connected!", Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.INVISIBLE);
             signIn.setEnabled(true);
             signUp.setEnabled(true);
             return;
         } else if ( email_text.isEmpty() || pass_text.isEmpty()) {
-            Toast.makeText(getApplicationContext(),"Fill this thing up!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Fill all things up!",Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.INVISIBLE);
             signIn.setEnabled(true);
             signUp.setEnabled(true);
@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity{
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Check your creds!",
+                            Toast.makeText(getApplicationContext(), "Email or password incorrect!",
                                     Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.INVISIBLE);
                             signIn.setEnabled(true);
@@ -133,7 +133,7 @@ public class LoginActivity extends AppCompatActivity{
 
     public void onSignUpButtonClicked(View v) {
         startActivity(new Intent(this, SignupActivity.class));
-        Toast.makeText(getApplicationContext(),"Working!",Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getApplicationContext(),"Working!",Toast.LENGTH_SHORT).show();
     }
 
 

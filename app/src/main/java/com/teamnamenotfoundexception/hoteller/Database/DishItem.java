@@ -20,6 +20,7 @@ public class DishItem implements Serializable{
     public int mTotalPrice;
     public int isFav;
     public int isCart;
+    public String mTags;
 
 
     public DishItem() {
@@ -38,9 +39,10 @@ public class DishItem implements Serializable{
         this.isCart = dishItem.getIsCart();
         this.mQuantity = dishItem.getQuantity();
         this.mTotalPrice = dishItem.getTotalPrice();
+        this.mTags = "";
     }
 
-    public DishItem(int dishId, String dishName, String dishType, int price, String description, String imagePath) {
+    public DishItem(int dishId, String dishName, String dishType, int price, String description, String imagePath, String tags) {
 
         this.mDishId = dishId;
         this.mDishName = dishName;
@@ -50,8 +52,19 @@ public class DishItem implements Serializable{
         this.mImagePath = imagePath ;
         this.isFav = 0;
         this.isCart = 0;
-
+        this.mTags = tags;
     }
+
+
+    public void setTags(String tags) {
+        this.mTags = tags;
+    }
+
+
+    public String  getTags() {
+        return mTags;
+    }
+
 
     public int getIsCart(){return isCart;}
     public void setIsCart(int a) {isCart = a;};
