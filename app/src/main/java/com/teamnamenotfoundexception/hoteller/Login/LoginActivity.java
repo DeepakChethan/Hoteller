@@ -37,7 +37,21 @@ public class LoginActivity extends AppCompatActivity{
         setContentView(R.layout.activity_login);
         email = (EditText) findViewById(R.id.email);
         pass = (EditText) findViewById(R.id.pass);
+        signIn = (Button) findViewById(R.id.lloginBtn);
+        signUp = (Button) findViewById(R.id.lsignUpButton);
         mAuth = FirebaseAuth.getInstance();
+        signIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onLoginButtonClicked(v);
+            }
+        });
+        signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSignUpButtonClicked(v);
+            }
+        });
         progressBar = (ProgressBar) findViewById(R.id.progress);
     }
 
