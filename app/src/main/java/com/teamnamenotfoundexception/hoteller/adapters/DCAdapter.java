@@ -30,6 +30,7 @@ import com.teamnamenotfoundexception.hoteller.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
 
 public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
 
@@ -72,6 +73,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
        Log.i("price", "price of dishitem" + dishItem.getDishName() + " " + dishItem.getPrice());
         holder.dishTitle.setText(dishItem.getDishName());
         holder.dishCat.setText(dishItem.getDishType());
+
         holder.tags.setText(dishItem.getTags());
         holder.dishCost.setText(dishItem.getPrice()+"");
         Glide.with(context).load(dishItem.getImagePath()).into(holder.dishImage);
@@ -95,7 +97,6 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
         if (dishItem.getIsFav() == 1) holder.heartBtn.setIconEnabled(true);
         if (dishItem.getIsCart()== 1) holder.cartBtn.setIconEnabled(true);
 
-
         holder.heartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,7 +109,8 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                         setData(cartManager.getFavItems());
                     }
                     holder.heartBtn.setIconEnabled(true,true);
-                    StyleableToast.makeText(context,dishItem.getDishName()+"is added to favorites!",R.style.cart_add).show();
+
+
                 } else {
                     dishItem.setDishFav(0);
                     cartManager.removeFromFavorites(dishItem);
@@ -116,9 +118,8 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                        setData(cartManager.getFavItems());
                    }
                     holder.heartBtn.setIconEnabled(false,true);
-                    StyleableToast.makeText(context,dishItem.getDishName()+" is removed from favorites!",R.style.cart_rm).show();
+
                 }
-                System.out.println("size of favorite list " + cartManager.getFavoriteIdList().size());
             }
         });
 
@@ -135,7 +136,15 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                     if (activity instanceof CartActivity) {
                         setData(cartManager.getCartItems());
                     }
-                    StyleableToast.makeText(context,dishItem.getDishName()+" is added to cart!",R.style.love_add).show();
+                    final StyleableToast styleableToast = StyleableToast.makeText(context,dishItem.getDishName()+" is added to cart!",R.style.cart_add);
+                    styleableToast.show();
+                    android.os.Handler handler = new android.os.Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            styleableToast.cancel();
+                        }
+                    },500);
                 } else {
                     cartManager.removeDishFromCart(dishItem);
                     dishItem.setIsCart(0);
@@ -144,7 +153,15 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
                     if (activity instanceof CartActivity) {
                         setData(cartManager.getCartItems());
                     }
-                    StyleableToast.makeText(context,dishItem.getDishName()+ "is removed from cart!",R.style.love_rm).show();
+                    final StyleableToast styleableToast = StyleableToast.makeText(context,dishItem.getDishName()+ " is removed from cart!",R.style.cart_rm);
+                    styleableToast.show();
+                    android.os.Handler handler = new android.os.Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            styleableToast.cancel();
+                        }
+                    },500);
                 }
                 System.out.println(cartManager.getFavoriteIdList().size());
 
