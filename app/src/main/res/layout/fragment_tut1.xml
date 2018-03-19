@@ -1,0 +1,45 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context="com.teamnamenotfoundexception.hoteller.fragments.Tut1Fragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linear"
+        android:paddingRight="@dimen/dopeDimen"
+        android:paddingLeft="@dimen/dopeDimen"
+        android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/log"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/hoteller_icon"
+        />
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/titl"
+        android:layout_gravity="center"
+        android:src="@drawable/hotellerlogo"
+        />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:text="Welcome to hoteller, an app designed to automate billing process in a single hotel.
+Swipe left to learn more."/>
+    </LinearLayout>
+
+</FrameLayout>

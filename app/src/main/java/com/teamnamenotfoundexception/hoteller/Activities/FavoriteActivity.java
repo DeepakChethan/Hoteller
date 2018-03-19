@@ -69,7 +69,5 @@ public class FavoriteActivity extends AppCompatActivity {
         finish();
     }
 
-    public void buyAll(View v){
-        startActivity(new Intent(getApplicationContext(),BillActivity.class));
-    }
+
 }

@@ -12,8 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linear"
-        android:paddingRight="@dimen/dopeDimen"
-        android:paddingLeft="@dimen/dopeDimen"
+        android:padding="16dp"
         android:orientation="vertical">
 
         <ImageView
@@ -43,7 +42,7 @@
             android:textColor="@color/white"
             android:backgroundTint="@color/white"
             android:inputType="textEmailAddress"
-            android:text="sagar@s.com" />
+            />
         </android.support.design.widget.TextInputLayout>
 
 
@@ -61,7 +60,7 @@
             android:hint="@string/password"
             android:textColor="@color/white"
             android:inputType="textPassword"
-            android:text="sagarcs" />
+             />
         </android.support.design.widget.TextInputLayout>
 
 

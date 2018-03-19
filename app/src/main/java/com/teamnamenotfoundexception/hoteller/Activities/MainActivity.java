@@ -3,6 +3,7 @@ package com.teamnamenotfoundexception.hoteller.Activities;
 import android.app.Activity;
 import android.app.Notification;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
@@ -19,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +29,7 @@ import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.teamnamenotfoundexception.hoteller.TutorialActivity;
 import com.teamnamenotfoundexception.hoteller.Database.UpdateNotificationCount;
 import com.teamnamenotfoundexception.hoteller.adapters.BillAdapter;
 import com.teamnamenotfoundexception.hoteller.adapters.DCAdapter;
@@ -37,11 +40,6 @@ import com.teamnamenotfoundexception.hoteller.Login.LoginActivity;
 import com.teamnamenotfoundexception.hoteller.R;
 
 import java.util.ArrayList;
-
-
-
-
-
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, UpdateNotificationCount {
@@ -54,8 +52,8 @@ public class MainActivity extends AppCompatActivity
     private FirebaseUser mUser;
     private static DCAdapter mDCAdapter;
     private static DishRepository mDishRepository ;
-    private Notification notification;
     private TextView notiCount;
+    private ProgressBar progressBar;
 
     int cartCount;
 
@@ -81,6 +79,18 @@ public class MainActivity extends AppCompatActivity
         mDishRepository = DishRepository.get(getApplicationContext());
         CartManager.get(getApplicationContext()).setListenerInterface(this);
 
+        SharedPreferences sp = getSharedPreferences("tut",MODE_PRIVATE);
+        Boolean sc = sp.getBoolean("show",false);
+
+        if (!sc){
+            sp.edit().putBoolean("show",true).apply();
+            Intent intent = new Intent(MainActivity.this, TutorialActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            Toast.makeText(getApplicationContext(),sp.getBoolean("show",false)+" So taking you there",Toast.LENGTH_SHORT).show();
+        }
+
+
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
@@ -102,7 +112,6 @@ public class MainActivity extends AppCompatActivity
         Log.i("i", "staying here only");
 //        Log.i("i", mUser.getEmail());
 
-
         dishItems = new ArrayList<>(mDishRepository.getDishItemsList());
 
         // The recycler view
@@ -117,8 +126,14 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        progressBar = (ProgressBar) findViewById(R.id.tempProgress);
+        progressBar.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
 
@@ -200,10 +215,6 @@ public class MainActivity extends AppCompatActivity
                 }
             };
         }
-
-
-
-
 
         android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView) MenuItemCompat.getActionView(menuItem);
 

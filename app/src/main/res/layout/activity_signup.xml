@@ -59,7 +59,7 @@
                 android:id="@+id/spass"
                 android:backgroundTint="@color/white"
                 android:textColor="@color/white"
-                android:inputType="textEmailAddress"
+                android:inputType="textPassword"
                 android:hint="Password"
                 />
         </android.support.design.widget.TextInputLayout>
