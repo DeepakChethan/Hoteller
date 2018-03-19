@@ -8,9 +8,12 @@
         android:icon="@drawable/ic_search_black_24dp"
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView" />
+
     <item
+
         android:title="Cart"
-        android:id="@+id/cart"
+        android:actionLayout="@layout/action_bar_notification_icon"
+        android:id="@+id/dcart"
         android:icon="@drawable/ic_shopping_cart_black_24dp"
         app:showAsAction="always"
         />
