@@ -221,14 +221,16 @@ public class MainActivity extends AppCompatActivity
         searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String newText) {
-                    return false;
+                return false;
             }
+
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if(newText == "") {
+                if (newText == ""){
                     mDCAdapter.setData(mDishRepository.getDishItemsList());
                     return true;
+
                 }
                 newText = newText.toLowerCase();
                 ArrayList<DishItem> newList = new ArrayList<>();
@@ -240,9 +242,9 @@ public class MainActivity extends AppCompatActivity
                     String cat = dishItem.getDishType().toLowerCase();
                     Log.i("dc",name+" "+newText);
                     if (name.contains(newText) || cat.equals(newText)) {
-                        if(CartManager.get(getApplicationContext()).getFavoriteIdList().contains(dishItem.getDishId())) {
-                            dishItem.setDishFav(1);
-                        }
+                       // if(CartManager.get(getApplicationContext()).getFavoriteIdList().contains(dishItem.getDishId())) {
+                       //     dishItem.setDishFav(1);
+                       // }
                         newList.add(dishItem);
                     }
                     mDCAdapter.setData(newList);
