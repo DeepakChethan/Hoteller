@@ -1,11 +1,9 @@
 package com.teamnamenotfoundexception.hoteller.Activities;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -91,8 +89,6 @@ public class MainActivity extends AppCompatActivity
             finish();
             return;
         }
-
-
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
@@ -303,6 +299,7 @@ public class MainActivity extends AppCompatActivity
              } catch(Exception e) {
                  Toast.makeText(getApplicationContext(), "Trouble logging you out. Check your connection!", Toast.LENGTH_SHORT).show();
              }
+
 
             Intent intent = new Intent(this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
