@@ -143,28 +143,45 @@ public class MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.menu, menu);
         MenuItem menuItem = menu.findItem(R.id.search);
         android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView) MenuItemCompat.getActionView(menuItem);
+
         searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String newText) {
-
-                return false;
+                    return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                if(newText == "") {
+                    mDCAdapter.setData(mDishRepository.getDishItemsList());
+                    return true;
+                }
                 newText = newText.toLowerCase();
                 ArrayList<DishItem> newList = new ArrayList<>();
                 dishItems = mDishRepository.getDishItemsList();
-                for(DishItem dishItem: dishItems){
+                System.out.println("size is" + dishItems.size());
+                for(int i = 0; i < dishItems.size(); i++){
+                    DishItem dishItem = dishItems.get(i);
                     String name = dishItem.getDishName().toLowerCase();
                     String cat = dishItem.getDishType().toLowerCase();
                     Log.i("dc",name+" "+newText);
-                    if (name.contains(newText) || cat.contains(newText)){
+                    if (name.contains(newText) || cat.equals(newText)){
                         newList.add(dishItem);
                     }
-                    mDCAdapter.setFilter(newList);
-                    return true;
+                    mDCAdapter.setData(newList);
                 }
+                return true ;
+            }
+
+
+
+
+
+        });
+        searchView.setOnCloseListener(new android.support.v7.widget.SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                mDCAdapter.setData(mDishRepository.getDishItemsList());
                 return false;
             }
         });
