@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/full_touch"
+        android:src="@drawable/touch_item2"
+        android:layout_margin="6dp"
         android:id="@+id/img"/>
 
         <TextView
@@ -32,7 +33,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="220dp"
             android:layout_marginTop="20dp"
             android:src="@drawable/touch_dialog"/>
         <TextView

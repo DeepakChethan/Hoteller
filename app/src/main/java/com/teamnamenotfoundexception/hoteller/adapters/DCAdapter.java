@@ -72,6 +72,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
        Log.i("price", "price of dishitem" + dishItem.getDishName() + " " + dishItem.getPrice());
         holder.dishTitle.setText(dishItem.getDishName());
         holder.dishCat.setText(dishItem.getDishType());
+        holder.tags.setText("PUT THE TAGS HERE");
         holder.dishCost.setText(dishItem.getPrice()+"");
         Glide.with(context).load(dishItem.getImagePath()).into(holder.dishImage);
         if (context instanceof CartActivity){
@@ -161,7 +162,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
         public ImageView dishImage;
-        public TextView dishCat, dishTitle,dishCost,dishCount,x;
+        public TextView dishCat, dishTitle,dishCost,dishCount,x,tags;
         public SwitchIconView cartBtn, heartBtn;
         public ViewHolder(final View itemView) {
             super(itemView);
@@ -172,6 +173,7 @@ public class DCAdapter extends RecyclerView.Adapter<DCAdapter.ViewHolder> {
             dishCost = (TextView) itemView.findViewById(R.id.dish_cost);
             dishCat = (TextView) itemView.findViewById(R.id.dish_category);
             heartBtn = (SwitchIconView) itemView.findViewById(R.id.favBtn);
+            tags = (TextView) itemView.findViewById(R.id.tags);
             cartBtn = (SwitchIconView) itemView.findViewById(R.id.cartBtn);
             itemView.setOnClickListener(this);
 

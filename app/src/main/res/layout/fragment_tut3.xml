@@ -15,7 +15,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/full_touch2"/>
+            android:src="@drawable/touch_item"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,8 +25,8 @@
 
             android:layout_marginTop="10dp"
             android:textSize="20sp"
-            android:text="Tap on the cart icon to add/remove  to your cart
-Or you can favorite/unfavorite the food item by tapping on the heart icon."
+            android:text="Tap on the cart icon to add/remove item to your cart
+Or you can favorite/unfavorite the food item by tapping on the heart icon.\nThe nav cart icon shows number of items in cart."
             android:textAlignment="center"/>
 
         <Button
@@ -34,7 +34,7 @@ Or you can favorite/unfavorite the food item by tapping on the heart icon."
             android:layout_height="wrap_content"
             android:text="Let's go"
            android:layout_marginTop="25dp"
-            android:layout_marginBottom="70dp"
+            android:layout_marginBottom="40dp"
             android:id="@+id/buttonTutu"
             style="@style/btnStyle"/>
     </LinearLayout>
