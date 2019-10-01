@@ -78,16 +78,21 @@ public class CartManager {
 
     public static CartManager get(Context c) {
 
-        if (mCartManager == null) {
-            mCartManager = new CartManager(c);
-            Log.i("i", "Cart Manager initialized");
+        synchronized(this) {
+            
+            if (mCartManager == null) {
+                mCartManager = new CartManager(c);
+                Log.i("i", "Cart Manager initialized");
+            }
+            
         }
+        
         return mCartManager;
     }
 
     public void setListenerInterface(Activity activity) {
             if(activity != null) {
-                mUpdateNotificationCount = (MainActivity)activity;
+                mUpdateNotificationCount = (MainActivity) activity;
             }
     }
 
